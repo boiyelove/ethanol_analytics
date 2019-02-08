@@ -4,3 +4,6 @@ from django.views.generic import TemplateView
 # Create your views here.
 class LayoutView(TemplateView):
 	template_name = 'core/layout.html'
+
+class DashboardView(TemplateView):
+	template_name = 'core/dashboard.html'
