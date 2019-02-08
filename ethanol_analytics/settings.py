@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+EMAIL_BACKEND = "django.core.mail.console.EmailBackend"
+DEFAULT_FROM_MAIL = 'notification@ehtanol_analytics'
+
 
 # Application definition
 
@@ -126,6 +129,8 @@ USE_L10N = True
 USE_TZ = True
 
 SITE_ID = 1
+
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
