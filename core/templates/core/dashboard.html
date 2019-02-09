@@ -529,6 +529,7 @@
 									</div>
 								</div>
 							</div>
+							{% if request.user.is_superuser %}
 							<div class="masonry-item col-md-6">
 								<div class="bd bgc-white p-20">
 									<div class="layers">
@@ -583,6 +584,7 @@
 									</div>
 								</div>
 							</div>
+							{% endif %}
 							<div class="masonry-item col-md-6">
 								<div class="bd bgc-white p-20">
 									<div class="layers">
