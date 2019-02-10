@@ -11,7 +11,7 @@ from .models import UserAccessRequest
 class CanViewContentTest:
 	def dispatch(self, request, *args, **kwargs):
 		if request.user.is_superuser:
-			return super().dispatch(*args, **kwargs)
+			return super().dispatch(request, *args, **kwargs)
 		else:
 			try:
 				useraccessrequest = UserAccessRequest.objects.get(user =  request.user)
