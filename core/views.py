@@ -21,7 +21,7 @@ class CanViewContentTest:
 				return HttpResponseRedirect(reverse_lazy('core:permission-error'))
 
 class LayoutView(LoginRequiredMixin, TemplateView):
-	template_name = 'core/layout.html'
+	template_name = 'core/login.html'
 
 class DashboardView(LoginRequiredMixin, CanViewContentTest, TemplateView):
 	template_name = 'core/dashboard.html'
