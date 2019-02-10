@@ -1,3 +1,4 @@
 *.py[c]
 *.config
 \venv
+db.sqlite3
