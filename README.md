@@ -10,11 +10,11 @@ pip install -r req.txt
 python manage.py runserver
 ```
 
-> Then open your browser and visit
+Then open your browser and visit
 
-> 127.0.0.1:8000/signup to signup
+127.0.0.1:8000/signup to signup
 
-> 127.0.0.1/login to login
+127.0.0.1/login to login
 
-> 127.0.0.1/dashboard for dashboard
+127.0.0.1/dashboard for dashboard
 
