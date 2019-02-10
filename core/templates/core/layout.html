@@ -192,60 +192,37 @@
 					<div class="header-container">
 						<ul class="nav-left">
 							<li>
-								<a id="sidebar-toggle" class="sidebar-toggle" href="javascript:void(0);">
+								<a id="sidebar-toggle" class="sidebar-toggle" href="javascript:void(0);" style="padding-top: 5px;">
 									<i class="ti-menu">
 									</i>
 								</a>
 							</li>
 							<li>
-								<a type="button" class="btn cur-p btn-primary text-white">Bug Report</a>
+								<a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+											<i class="ti-unlink mR-10"><span style="margin-left:.3em;">Report Bug</span>
+											</i>
+										</a>
 							</li>
 						</ul>
 						<ul class="nav-right">
-							<li class="dropdown">
-								<a href="" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-toggle="dropdown">
+							{% if request.user.is_authenticated %}
+							<li>
+								<a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
 									<div class="peer">
 										<span class="fsz-sm c-grey-900">
 										{{ request.user }}</span>
 									</div>
 								</a>
-								<ul class="dropdown-menu fsz-sm">
-									<li>
-										<a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-											<i class="ti-settings mR-10">
-											</i>
-											<span>
-											Setting</span>
-										</a>
-									</li>
-									<li>
-										<a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-											<i class="ti-user mR-10">
-											</i>
-											<span>
-											Profile</span>
-										</a>
-									</li>
-									<li>
-										<a href="email.html" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-											<i class="ti-email mR-10">
-											</i>
-											<span>
-											Messages</span>
-										</a>
-									</li>
-									<li role="separator" class="divider">
-									</li>
-									<li>
-										<a href="{% url 'account_logout' %}" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-											<i class="ti-power-off mR-10">
-											</i>
-											<span>
-											Logout</span>
-										</a>
-									</li>
-								</ul>
 							</li>
+							
+							<li>
+										<a href="{% url 'account_logout' %}" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+											<i class="ti-power-off mR-10"><span style="margin-left:.2em;">Logout</span>
+											</i>
+										</a>
+									</li>
+							</li>
+							{% endif %}
 						</ul>
 					</div>
 				</div>
@@ -268,6 +245,8 @@
 		</script>
 		<script type="text/javascript" src="{% static '/js/bundle.js' %}">
 		</script>
+		{% block extra_js %}
+		{% endblock %}
 	</body>
 	</html>
 
