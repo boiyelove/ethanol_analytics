@@ -2,3 +2,4 @@
 *.config
 \venv
 db.sqlite3
+db_info.py
