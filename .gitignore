@@ -1,8 +1,4 @@
 *.py[c]
 *.config
 \venv
-<<<<<<< HEAD
-=======
-db.sqlite3
->>>>>>> 3aedda3c6f52a9160cc4d504c2f439690c011473
 db_info.py
