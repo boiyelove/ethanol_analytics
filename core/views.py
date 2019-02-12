@@ -3,8 +3,10 @@ from django.http import HttpResponseRedirect, JsonResponse, HttpResponse, Http40
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.views.generic import TemplateView
+from django.views.generic.edit import FormView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import UserAccessRequest
+from .forms import BugReportForm
 
 # Create your views here.
 
@@ -65,3 +67,12 @@ class PermissionRequiredView(LoginRequiredMixin, TemplateView):
 		context = self.get_context_data(**kwargs)
 		context['access_granted'] = True
 		return self.render_to_response(context)
+
+class ReportBugFV(LoginRequiredMixin, FormView):
+	template_name = 'core/forms.html'
+	form_class = BugReportForm
+	success_url = reverse_lazy('core:dashboard')
+
+	def form_valid(self, form):
+		send_bugreport = form.send_bug_report()
+		return super().form_valid(form)

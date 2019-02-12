@@ -28,8 +28,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-DEFAULT_FROM_MAIL = 'notification@ehtanol_analytics'
-
+DEFAULT_FROM_EMAIL = "notification@ethanol_analytics"
+DEFAULT_TO_EMAIL = "kvantakala@6csolutions.com"
 
 # Application definition
 
