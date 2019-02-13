@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+from . import db_info 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -30,6 +31,8 @@ ALLOWED_HOSTS = []
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 DEFAULT_FROM_EMAIL = "notification@ethanol_analytics"
 DEFAULT_TO_EMAIL = "kvantakala@6csolutions.com"
+
+
 
 # Application definition
 
@@ -90,8 +93,11 @@ WSGI_APPLICATION = 'ethanol_analytics.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': db_info.database,
+        'USER': db_info.username ,
+        'PASSWORD': db_info.password,
+        'HOST': db_info.host,
     }
 }
 
