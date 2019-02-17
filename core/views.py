@@ -5,8 +5,12 @@ from django.contrib import messages
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .models import UserAccessRequest
+from .models import UserAccessRequest, get_sensor_data
 from .forms import BugReportForm
+from easy_pdf.views import PDFTemplateView
+
+class HelloPDFView(PDFTemplateView):
+	template_name = "something.html"
 
 # Create your views here.
 
@@ -31,6 +35,7 @@ class DashboardView(LoginRequiredMixin, CanViewContentTest, TemplateView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['permission_requests'] = UserAccessRequest.objects.all()
+		context['sensor_data'] = get_sensor_data()
 		return context
 
 	def post(self, request, *args, **kwargs):
