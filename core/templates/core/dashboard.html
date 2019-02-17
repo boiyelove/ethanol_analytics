@@ -327,8 +327,9 @@
 							Show
 							<select name="entries" id="id_entries" class="form-control w-10">
 								<option value="10">10</option>
-								<option value="20">20</option>
 								<option value="30">30</option>
+								<option value="50">50</option>
+								<option value="all">All</option>
 							</select>
 							entries
 						</label>
@@ -341,6 +342,7 @@
 						<tr>
 							<th scope="col">date</th>
 							<th scope="col">sensor_id</th>
+							<th scope="col">sensor_description</th>
 							<th scope="col">day_avg</th>
 							<th scope="col">week_avg</th>
 							<th scope="col">month_avg</th>
@@ -350,106 +352,20 @@
 						</tr>
 					</thead>
 					<tbody>
+						{% for sensor in sensor_data %}
 						<tr>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
+							<td>{{ sensor.date }}</td>
+							<td>{{ sensor.sensor_id}}</td>
+							<td>{{ sensor.sensor_description}}</td>
+							<td>{{ sensor.day_avg }}</td>
+							<td>{{ sensor.week_avg }}</td>
+							<td>{{ sensor.month_avg }}</td>
+							<td>{{ sensor.day_pct_change }}</td>
+							<td>{{ sensor.week_pct_change }}</td>
+							<td>{{ sensor.month_pct_change }}</td>
 						</tr>
-						<tr>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-						</tr>
-						<tr>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-						</tr>
-						<tr>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-						</tr>
-						<tr>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-						</tr>
-						<tr>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-						</tr>
-						<tr>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-						</tr>
-						<tr>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-						</tr>
-						<tr>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-						</tr>
-						<tr>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-							<td>somedata</td>
-						</tr>
+						{% endfor %}
+
 					</tbody>
 				</table>
 
@@ -458,6 +374,19 @@
 	</div>
 </div>
 
+<div class="masonry-item col-md-12">
+	<div class="bd bgc-white">
+				<div class="layers">
+				<div class="layer w-100 pX-20 pT-20">
+					<h6 class="lh-1">
+					Monthly Stats</h6>
+				</div>
+				<div class="layer w-100 p-20">
+					<canvas id="sensor-line-chart" height="220">
+					</canvas>
+				</div>
+	</div>
+</div>
 </div>
 
 
@@ -482,6 +411,31 @@
 
 		});
 	});
+
+	new Chart(document.getElementById("sensor-line-chart"), {
+  type: 'line',
+  data: {
+    labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
+    datasets: [{ 
+        data: [86,114,106,106,107,111,133,221,783,2478],
+        label: "Day Avg",
+        borderColor: "#3e95cd",
+        fill: false
+      }, { 
+        data: [282,350,411,502,635,809,947,1402,3700,5267],
+        label: "Week Avg",
+        borderColor: "#8e5ea2",
+        fill: false
+      },
+    ]
+  },
+  options: {
+    title: {
+      display: true,
+      text: 'Sensor Data'
+    }
+  }
+});
 </script>
 {% endblock %}
 

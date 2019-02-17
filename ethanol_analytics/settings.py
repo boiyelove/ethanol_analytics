@@ -99,7 +99,14 @@ DATABASES = {
         'USER': db_info.username ,
         'PASSWORD': db_info.password,
         'HOST': db_info.host,
-    }
+    },
+    'sensors': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': db_info.database2,
+        'USER': db_info.username ,
+        'PASSWORD': db_info.password,
+        'HOST': db_info.host,
+    },
 }
 
 

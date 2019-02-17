@@ -1,4 +1,4 @@
-from django.db import models, connection
+from django.db import models, connections
 from django.conf import settings
 from model_utils.models import TimeStampedModel
 # Create your models here.
@@ -9,21 +9,19 @@ class UserAccessRequest(TimeStampedModel):
 
 
 
+def dictfetchall(cursor):
+	columns = [col[0] for col in cursor.description]
+	return [
+		dict(zip(columns, row))
+		for row in cursor.fetchall()
+	]
 
+def get_sensor_data(n=10):
+	with connections['sensors'].cursor() as cursor:
+		cursor.execute("Select date, b.sensor_description, a.sensor_id,sensor_units, day_avg, week_avg, month_avg, day_pct_change, week_pct_change, month_pct_change , asset_category, asset_name from kpi_agg_table a inner join sensor_metadata b \
+on a.sensor_id = b.sensor_id and a.sensor_id in ('PORT_CIP.AB_B.F44:111','PORT_CIP.AB_B.F44:110','PORT_CIP.AB_K.F44:70','PORT_CIP.AB_C.N15:203', 'PORT_CIP.AB_C.N15:223','PORT_CIP.AB_C.F44:130','PORT_CIP.AB_C.F44:120','PORT_CIP.AB_B.F44:50') order by date desc limit %d;" % n)
+		return dictfetchall(cursor)
 
-def get_sensor_data():
-	with connection.cursor() as cursor:
-		cursor.execute("Select date,sensor_description, a.sensor_id,sensor_units, day_avg, week_avg, month_avg, day_pct_change, week_pct_change, month_pct_change , \
-			asset_category, asset_name  \
-			from kpi_agg_table a  \
-			left join sensor_metadata b \
-			on a.sensor_id = b.sensor_id \
-			and a.sensor_id in  \
-			('PORT_CIP.AB_B.F44:111','PORT_CIP.AB_B.F44:110','PORT_CIP.AB_K.F44:70','PORT_CIP.AB_C.N15:203', \
-			'PORT_CIP.AB_C.N15:223','PORT_CIP.AB_C.F44:130','PORT_CIP.AB_C.F44:120','PORT_CIP.AB_B.F44:50') \
-			order by date desc")
-		sensor_data = cursor.fetchall()
-	return sensor_data
 
 
 # class Sensor(models.Model):
