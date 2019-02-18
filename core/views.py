@@ -35,7 +35,21 @@ class DashboardView(LoginRequiredMixin, CanViewContentTest, TemplateView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['permission_requests'] = UserAccessRequest.objects.all()
-		context['sensor_data'] = get_sensor_data()
+		sensor_data = get_sensor_data()
+		sensor_list = [{"sensor_id": sensor['sensor_id'], "sensor_description":sensor['sensor_description']} for sensor in sensor_data]
+		sensor_id = self.request.GET.get("sensor_id", None)
+		entries = self.request.GET.get("entries", 50)
+		if sensor_id:
+			sensor_data = get_sensor_data(sensor_id= "'" + sensor_id + "'", n=entries)
+		else:
+			sensor_data = get_sensor_data()
+		sensor_list = [dict(tupled) for tupled in set(tuple(sensor.items()) for sensor in sensor_list)]
+
+		context['sensor_id'] = sensor_id
+		context['entries'] = entries
+		context['sensor_list'] = sensor_list
+		context['sensor_data'] = sensor_data
+		context['freq'] = 'week'
 		return context
 
 	def post(self, request, *args, **kwargs):
