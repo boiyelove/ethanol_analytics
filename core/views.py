@@ -36,8 +36,6 @@ class DashboardView(LoginRequiredMixin, CanViewContentTest, TemplateView):
 		context = super().get_context_data(**kwargs)
 		context['permission_requests'] = UserAccessRequest.objects.all()
 		context['sensor_data'] = get_sensor_data()
-		
-		print('sensor_data is', context['sensor_data'])
 		return context
 
 	def post(self, request, *args, **kwargs):
