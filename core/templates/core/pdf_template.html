@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Sensor Data Export</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS and Font Awesome CDN-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style> @page { size: letter landscape; margin: 2cm; } td {display: inline-block;word-wrap: break-word;border:1px solid black;} </style>
+
+  </head>
+  <body>
+
+
+	
+	{% if sensor_id %}
+    <h1>{{ sensor_id }}</h1>
+    {% else %}
+    <h3>Sensor Data Export</h3>
+    {% endif %}
+    <h5>Exported: {% now "jS F Y H:i" %}</h5>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th scope="col" width="10%">date</th>
+							<th scope="col" width="11%">sensor_id</th>
+							<th scope="col" width="11%">sensor_description</th>
+							<th scope="col" width="11%">day_avg</th>
+							<th scope="col" width="11%">week_avg</th>
+							<th scope="col" width="11%">month_avg</th>
+							<th scope="col" width="11%">day_pct_change</th>
+							<th scope="col" width="11%">week_pct_change</th>
+							<th scope="col" width="11%">month_pct_change</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for sensor in sensor_data %}
+						<tr>
+							<td>{{ sensor.date }}</td>
+							<td>{{ sensor.sensor_id}}</td>
+							<td>{{ sensor.sensor_description}}</td>
+							<td>{{ sensor.day_avg }}</td>
+							<td>{{ sensor.week_avg }}</td>
+							<td>{{ sensor.month_avg }}</td>
+							<td>{{ sensor.day_pct_change }}</td>
+							<td>{{ sensor.week_pct_change }}</td>
+							<td>{{ sensor.month_pct_change }}</td>
+						</tr>
+						{% endfor %}
+
+					</tbody>
+				</table>
+
+    <!-- Optional JavaScript Offline-->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="http://localhost/repo/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="http://localhost/repo/bower_components/bootstrap4/assets/js/vendor/popper.min.js"></script>
+    <script src="http://localhost/repo/bower_components/bootstrap4/dist/js/bootstrap.min.js"></script>
+
+
+    <!-- Optional JavaScript Online CDN -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script> -->
+  </body>
+</html>
