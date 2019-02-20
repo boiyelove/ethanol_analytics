@@ -229,10 +229,12 @@
 		<div class="bd bgc-white p-20" style="min-height:384px;">
 			<div class="layers">
 				<div class="layer w-100 mB-20">
+
 					<div class="btn-group" role="group" aria-label="Basic example">
 						<button type="button" class="btn btn-primary {% ifequal freq 'day' %}active{% endifequal %}">Day</button>
-						<button type="button {% ifequal freq 'week' %}active{% endifequal %}" class="btn btn-primary">Week</button>
-						<button type="button {% ifequal freq 'month' %}active{% endifequal %}" class="btn btn-primary">Month</button>
+
+						<button type="button" class="btn btn-primary {% ifequal freq 'week' %}active{% endifequal %}">Week</button>
+						<button type="button" class="btn btn-primary {% ifequal freq 'month' %}active{% endifequal %}">Month</button>
 					</div>
 				</div>
 
