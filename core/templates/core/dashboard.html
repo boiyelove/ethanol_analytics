@@ -12,7 +12,7 @@
 				<div class="layers bd bgc-white p-20">
 					<div class="layer w-100 mB-10">
 						<h6 class="lh-1">
-						Total Visits</h6>
+						Sensor Id</h6>
 					</div>
 					<div class="layer w-100">
 						<div class="peers ai-sb fxw-nw">
@@ -22,7 +22,7 @@
 							</div>
 							<div class="peer">
 								<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500">
-								+10%</span>
+								{{sensor_latest.sensor_id |default_if_none:"-"}}</span>
 							</div>
 						</div>
 					</div>
@@ -32,7 +32,7 @@
 				<div class="layers bd bgc-white p-20">
 					<div class="layer w-100 mB-10">
 						<h6 class="lh-1">
-						Total Page Views</h6>
+						Description</h6>
 					</div>
 					<div class="layer w-100">
 						<div class="peers ai-sb fxw-nw">
@@ -42,7 +42,7 @@
 							</div>
 							<div class="peer">
 								<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-red-50 c-red-500">
-								-7%</span>
+								{{sensor_latest.sensor_description |default_if_none:"-"}}</span>
 							</div>
 						</div>
 					</div>
@@ -52,7 +52,7 @@
 				<div class="layers bd bgc-white p-20">
 					<div class="layer w-100 mB-10">
 						<h6 class="lh-1">
-						Unique Visitor</h6>
+						Day Avg</h6>
 					</div>
 					<div class="layer w-100">
 						<div class="peers ai-sb fxw-nw">
@@ -62,7 +62,7 @@
 							</div>
 							<div class="peer">
 								<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-purple-50 c-purple-500">
-								~12%</span>
+								{{sensor_latest.day_avg |default_if_none:"-"}}</span>
 							</div>
 						</div>
 					</div>
@@ -72,7 +72,7 @@
 				<div class="layers bd bgc-white p-20">
 					<div class="layer w-100 mB-10">
 						<h6 class="lh-1">
-						Bounce Rate</h6>
+						Week Avg</h6>
 					</div>
 					<div class="layer w-100">
 						<div class="peers ai-sb fxw-nw">
@@ -82,7 +82,7 @@
 							</div>
 							<div class="peer">
 								<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-blue-50 c-blue-500">
-								33%</span>
+								{{sensor_latest.week_avg |default_if_none:"-"}}</span>
 							</div>
 						</div>
 					</div>
@@ -94,7 +94,7 @@
 				<div class="layers bd bgc-white p-20">
 					<div class="layer w-100 mB-10">
 						<h6 class="lh-1">
-						Total Visits</h6>
+						Month Avg</h6>
 					</div>
 					<div class="layer w-100">
 						<div class="peers ai-sb fxw-nw">
@@ -104,7 +104,7 @@
 							</div>
 							<div class="peer">
 								<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500">
-								+10%</span>
+								{{sensor_latest.month_avg |default_if_none:"-"}}</span>
 							</div>
 						</div>
 					</div>
@@ -114,7 +114,7 @@
 				<div class="layers bd bgc-white p-20">
 					<div class="layer w-100 mB-10">
 						<h6 class="lh-1">
-						Total Page Views</h6>
+						Day PCT Change</h6>
 					</div>
 					<div class="layer w-100">
 						<div class="peers ai-sb fxw-nw">
@@ -124,7 +124,7 @@
 							</div>
 							<div class="peer">
 								<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-red-50 c-red-500">
-								-7%</span>
+								{{sensor_latest.day_pct_change |default_if_none:"-"}}</span>
 							</div>
 						</div>
 					</div>
@@ -134,7 +134,7 @@
 				<div class="layers bd bgc-white p-20">
 					<div class="layer w-100 mB-10">
 						<h6 class="lh-1">
-						Unique Visitor</h6>
+						Week PCT Change</h6>
 					</div>
 					<div class="layer w-100">
 						<div class="peers ai-sb fxw-nw">
@@ -144,7 +144,7 @@
 							</div>
 							<div class="peer">
 								<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-purple-50 c-purple-500">
-								~12%</span>
+								{{sensor_latest.week_pct_change |default_if_none:"-"}}</span>
 							</div>
 						</div>
 					</div>
@@ -154,7 +154,7 @@
 				<div class="layers bd bgc-white p-20">
 					<div class="layer w-100 mB-10">
 						<h6 class="lh-1">
-						Bounce Rate</h6>
+						Month PCT Change</h6>
 					</div>
 					<div class="layer w-100">
 						<div class="peers ai-sb fxw-nw">
@@ -164,7 +164,7 @@
 							</div>
 							<div class="peer">
 								<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-blue-50 c-blue-500">
-								33%</span>
+								{{sensor_latest.month_pct_change |default_if_none:"-"}}</span>
 							</div>
 						</div>
 					</div>
@@ -183,7 +183,7 @@
 					Monthly Stats</h6>
 				</div>
 				<div class="layer w-100 p-20">
-					<canvas id="line-chart" height="220">
+					<canvas id="sensor-line-chart" height="220">
 					</canvas>
 				</div>
 				<div class="layer bdT p-20 w-100">
@@ -244,7 +244,9 @@
 					</select>
 				</div>
 				<div class="layer w-100">
+					<form target='_blank' action="{% url 'core:download-pdf' %}" method="get">
 					<button class="btn btn-primary btn-block">Download Report</button>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -312,7 +314,7 @@
 <div class="masonry-item col-md-12">
 	<div class="bd bgc-white">
 		<div class="layers">
-			<div class="layer w-100 table-responsive p-20">
+			<div class="layer w-100 p-20">
 				<h6 class="lh-1">
 				Sensor Data Table</h6>
 				<br>
@@ -332,7 +334,7 @@
 
 				</form>
 				<br>
-				<table class="table table-striped">
+				<table class="table w-100 table-striped">
 					<thead>
 						<tr>
 							<th scope="col">date</th>
@@ -369,59 +371,7 @@
 	</div>
 </div>
 </div>
-<div class="row gap-20 masonry pos-r">
-	<div class="col-md-12">
-		<div class="bd bgc-white">
-			<div class="layers">
-				<div class="layer w-100 pX-20 pT-20">
-					<h6 class="lh-1">
-					Monthly Stats</h6>
-				</div>
-				<div class="layer w-100 p-20">
-					<canvas id="sensor-line-chart" height="220">
-					</canvas>
-				</div>
-				<div class="layer bdT p-20 w-100">
-					<div class="peers ai-c jc-c gapX-20">
-						<div class="peer">
-							<span class="fsz-def fw-600 mR-10 c-grey-800">
-								10% <i class="fa fa-level-up c-green-500">
-								</i>
-							</span>
-							<small class="c-grey-500 fw-600">
-							APPL</small>
-						</div>
-						<div class="peer fw-600">
-							<span class="fsz-def fw-600 mR-10 c-grey-800">
-								2% <i class="fa fa-level-down c-red-500">
-								</i>
-							</span>
-							<small class="c-grey-500 fw-600">
-							Average</small>
-						</div>
-						<div class="peer fw-600">
-							<span class="fsz-def fw-600 mR-10 c-grey-800">
-								15% <i class="fa fa-level-up c-green-500">
-								</i>
-							</span>
-							<small class="c-grey-500 fw-600">
-							Sales</small>
-						</div>
-						<div class="peer fw-600">
-							<span class="fsz-def fw-600 mR-10 c-grey-800">
-								8% <i class="fa fa-level-down c-red-500">
-								</i>
-							</span>
-							<small class="c-grey-500 fw-600">
-							Profit</small>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
-</div>
 
 </div>
 
@@ -475,31 +425,79 @@
 		console.log(new_url);
 		window.location = new_url;
 	});
+	
+	var day_data = []
+	var week_data = []
+	{% if sensor_id %}
 
-	new Chart(document.getElementById("sensor-line-chart"), {
-		type: 'line',
+	{% for sensor in sensor_data %}
+		{% if sensor.day_avg != None %}
+			arr_data = {x: new Date("{{sensor.date.isoformat }}"),
+						y: {{sensor.day_avg}} }
+			day_data.push(arr_data);
+		{% endif %}
+
+		{% if sensor.week_avg != None %}
+
+		arr_data = {x: new Date("{{sensor.date.isoformat }}"),
+					y: {{sensor.week_avg }} }
+		week_data.push(arr_data);
+
+		{% endif %}
+
+	{% empty %}
+
+	{% endfor %}
+
+	{% endif %}
+	var ctx = document.getElementById("sensor-line-chart");
+	ctx.height = 238;
+	new Chart(ctx, {
+		type: 'scatter',
 		data: {
-			labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
-			datasets: [{ 
-				data: [86,114,106,106,107,111,133,221,783,2478],
-				label: "Day Avg",
-				borderColor: "#3e95cd",
-				fill: false
-			}, { 
-				data: [282,350,411,502,635,809,947,1402,3700,5267],
-				label: "Week Avg",
-				borderColor: "#8e5ea2",
-				fill: false
+				datasets: [{
+					label: 'Day Avg',
+					borderColor: 'purple',
+					fill: false,
+					data: day_data,
+					showLine: true,
+					bezierCurve: true,
+				}, {
+				label: 'Week Avg',
+					borderColor: 'blue',
+					fill: false,
+					data: week_data,
+					showLine: true,
+					bezierCurve: true,
+
+				}]
 			},
-			]
-		},
-		options: {
+			options: {
 			title: {
 				display: true,
-				text: 'Sensor Data'
-			}
+				text: 'Sensor Data Graph'
+			},
+			scales: {
+				xAxes: [{
+					type: 'time',
+					time: {
+						displayFormats:{
+							month: 'DD MM YYY'
+								}
+						},
+					distribution: 'linear',
+				}]
+			},
+			responsive: true,
+    		maintainAspectRatio: false
+
 		}
 	});
 </script>
 {% endblock %}
+
+
+
+
+
 
