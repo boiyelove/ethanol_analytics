@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <style> @page { size: letter landscape; margin: 2cm; } td {display: inline-block;word-wrap: break-word;border:1px solid black;} </style>
+  <style> @page { size: letter landscape; margin: 1cm; } td {display: inline-block;word-wrap: break-word;border:1px solid black; text-align:center;} td,th{width:auto;}</style>
 
   </head>
   <body>
@@ -26,15 +26,15 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th scope="col" width="10%">date</th>
-							<th scope="col" width="11%">sensor_id</th>
-							<th scope="col" width="11%">sensor_description</th>
-							<th scope="col" width="11%">day_avg</th>
-							<th scope="col" width="11%">week_avg</th>
-							<th scope="col" width="11%">month_avg</th>
-							<th scope="col" width="11%">day_pct_change</th>
-							<th scope="col" width="11%">week_pct_change</th>
-							<th scope="col" width="11%">month_pct_change</th>
+							<th scope="col">date</th>
+							<th scope="col">sensor_id</th>
+							<th scope="col">sensor_description</th>
+							<th scope="col">day_avg</th>
+							<th scope="col">week_avg</th>
+							<th scope="col">month_avg</th>
+							<th scope="col">day_pct_change</th>
+							<th scope="col">week_pct_change</th>
+							<th scope="col">month_pct_change</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -43,12 +43,12 @@
 							<td>{{ sensor.date }}</td>
 							<td>{{ sensor.sensor_id}}</td>
 							<td>{{ sensor.sensor_description}}</td>
-							<td>{{ sensor.day_avg }}</td>
-							<td>{{ sensor.week_avg }}</td>
-							<td>{{ sensor.month_avg }}</td>
-							<td>{{ sensor.day_pct_change }}</td>
-							<td>{{ sensor.week_pct_change }}</td>
-							<td>{{ sensor.month_pct_change }}</td>
+							<td>{{ sensor.day_avg|floatformat:2 }}</td>
+							<td>{{ sensor.week_avg|floatformat:2 }}</td>
+							<td>{{ sensor.month_avg|floatformat:2 }}</td>
+							<td>{{ sensor.day_pct_change|floatformat:2 }}</td>
+							<td>{{ sensor.week_pct_change|floatformat:2 }}</td>
+							<td>{{ sensor.month_pct_change|floatformat:2 }}</td>
 						</tr>
 						{% endfor %}
 

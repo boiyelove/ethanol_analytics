@@ -322,12 +322,12 @@
 							<td>{{ sensor.date }}</td>
 							<td>{{ sensor.sensor_id}}</td>
 							<td>{{ sensor.sensor_description}}</td>
-							<td>{{ sensor.day_avg }}</td>
-							<td>{{ sensor.week_avg }}</td>
-							<td>{{ sensor.month_avg }}</td>
-							<td>{{ sensor.day_pct_change }}</td>
-							<td>{{ sensor.week_pct_change }}</td>
-							<td>{{ sensor.month_pct_change }}</td>
+							<td>{{ sensor.day_avg|floatformat:2 }}</td>
+							<td>{{ sensor.week_avg|floatformat:2 }}</td>
+							<td>{{ sensor.month_avg|floatformat:2 }}</td>
+							<td>{{ sensor.day_pct_change|floatformat:2 }}</td>
+							<td>{{ sensor.week_pct_change|floatformat:2 }}</td>
+							<td>{{ sensor.month_pct_change|floatformat:2 }}</td>
 						</tr>
 						{% endfor %}
 
@@ -401,14 +401,14 @@
 	{% for sensor in sensor_data %}
 		{% if sensor.day_avg != None %}
 			arr_data = {x: new Date("{{sensor.date.isoformat }}"),
-						y: {{sensor.day_avg}} }
+						y: {{sensor.day_avg|floatformat:2}} }
 			day_data.push(arr_data);
 		{% endif %}
 
 		{% if sensor.week_avg != None %}
 
 		arr_data = {x: new Date("{{sensor.date.isoformat }}"),
-					y: {{sensor.week_avg }} }
+					y: {{sensor.week_avg|floatformat:2}} }
 		week_data.push(arr_data);
 
 		{% endif %}
