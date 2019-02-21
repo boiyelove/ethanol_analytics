@@ -210,6 +210,23 @@
 						{% endfor %}
 					</select>
 				</div>
+				<div class="layer w-100 mB-20">
+					<div class="form-inline">
+						<label for="entries" class="w-100">
+							<span class="w-20 pX-5">Show</span>
+							<select name="entries" id="entries" class="form-control w-60">
+								<option value="10" {% ifequal entries '10' %}selected="selected"{% endifequal %}>10</option>
+								<option value="30" {% ifequal entries '30' %}selected="selected"{% endifequal %}>30</option>
+								<option value="50" {% ifequal entries '50' %}selected="selected"{% endifequal %}>50</option>
+								<option value="all" {% ifequal entries 'all' %}selected="selected"{% endifequal %}>All</option>
+							</select>
+							<span class="w-20 pX-5">entries</span>
+						</label>
+					</div>
+
+
+
+				</div>
 				<div class="layer w-100">
 					<form target='_blank' action="{% url 'core:download-pdf' %}" method="get">
 					<button class="btn btn-primary btn-block">Download Report</button>
@@ -280,27 +297,11 @@
 
 <div class="masonry-item col-md-12">
 	<div class="bd bgc-white">
-		<div class="layers">
+		<div class="layers pT-20 pB-20">
 			<div class="layer w-100 p-20">
-				<h6 class="lh-1">
+				<h6 class="lh-1 text-center mB-20">
 				Sensor Data Table</h6>
-				<br>
-				<form class="form-inline">
-					<div class="input-group">
-						<label for="entries">
-							Show
-							<select name="entries" id="entries" class="form-control w-10">
-								<option value="10" {% ifequal entries '10' %}selected="selected"{% endifequal %}>10</option>
-								<option value="30" {% ifequal entries '30' %}selected="selected"{% endifequal %}>30</option>
-								<option value="50" {% ifequal entries '50' %}selected="selected"{% endifequal %}>50</option>
-								<option value="all" {% ifequal entries 'all' %}selected="selected"{% endifequal %}>All</option>
-							</select>
-							entries
-						</label>
-					</div>
-
-				</form>
-				<br>
+				
 				<table class="table w-100 table-striped">
 					<thead>
 						<tr>
