@@ -8,168 +8,42 @@
 	</div>
 	<div class="masonry-item w-100">
 		<div class="row gap-20">
+			{% for eachsensor in latest_dataset %}
 			<div class="col-md-3">
 				<div class="layers bd bgc-white p-20">
 					<div class="layer w-100 mB-10">
 						<h6 class="lh-1">
-						Sensor Id</h6>
+						{{eachsensor.sensor_description}}</h6>
 					</div>
 					<div class="layer w-100">
 						<div class="peers ai-sb fxw-nw">
+
 							<div class="peer peer-greed">
-								<span id="sparklinedash">
-								</span>
+							{% if freq == "day" %}
+								{{eachsensor.day_avg|default_if_none:"-"|floatformat:2}}
+							{% elif freq == 'week' %}
+								{{eachsensor.week_avg|default_if_none:"-"|floatformat:2}}
+							{% elif freq == 'month' %}
+								{{eachsensor.month_avg|default_if_none:"-"|floatformat:2}}
+							{% endif %}
 							</div>
 							<div class="peer">
 								<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500">
-								{{sensor_latest.sensor_id |default_if_none:"-"}}</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="layers bd bgc-white p-20">
-					<div class="layer w-100 mB-10">
-						<h6 class="lh-1">
-						Description</h6>
-					</div>
-					<div class="layer w-100">
-						<div class="peers ai-sb fxw-nw">
-							<div class="peer peer-greed">
-								<span id="sparklinedash2">
+							{% if freq == 'day' %}
+								{{eachsensor.day_pct_change|default_if_none:"-"|floatformat:2}}
+							{% elif freq == 'week' %}
+								{{eachsensor.week_pct_change|default_if_none:"-"|floatformat:2}}
+							{% elif freq == 'month' %}
+								{{eachsensor.month_pct_change|default_if_none:"-"|floatformat:2}}
+							{% endif %}
 								</span>
 							</div>
-							<div class="peer">
-								<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-red-50 c-red-500">
-								{{sensor_latest.sensor_description |default_if_none:"-"}}</span>
-							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3">
-				<div class="layers bd bgc-white p-20">
-					<div class="layer w-100 mB-10">
-						<h6 class="lh-1">
-						Day Avg</h6>
-					</div>
-					<div class="layer w-100">
-						<div class="peers ai-sb fxw-nw">
-							<div class="peer peer-greed">
-								<span id="sparklinedash3">
-								</span>
-							</div>
-							<div class="peer">
-								<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-purple-50 c-purple-500">
-								{{sensor_latest.day_avg |default_if_none:"-"}}</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="layers bd bgc-white p-20">
-					<div class="layer w-100 mB-10">
-						<h6 class="lh-1">
-						Week Avg</h6>
-					</div>
-					<div class="layer w-100">
-						<div class="peers ai-sb fxw-nw">
-							<div class="peer peer-greed">
-								<span id="sparklinedash4">
-								</span>
-							</div>
-							<div class="peer">
-								<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-blue-50 c-blue-500">
-								{{sensor_latest.week_avg |default_if_none:"-"}}</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row gap-20">
-			<div class="col-md-3">
-				<div class="layers bd bgc-white p-20">
-					<div class="layer w-100 mB-10">
-						<h6 class="lh-1">
-						Month Avg</h6>
-					</div>
-					<div class="layer w-100">
-						<div class="peers ai-sb fxw-nw">
-							<div class="peer peer-greed">
-								<span id="sparklinedash">
-								</span>
-							</div>
-							<div class="peer">
-								<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500">
-								{{sensor_latest.month_avg |default_if_none:"-"}}</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="layers bd bgc-white p-20">
-					<div class="layer w-100 mB-10">
-						<h6 class="lh-1">
-						Day PCT Change</h6>
-					</div>
-					<div class="layer w-100">
-						<div class="peers ai-sb fxw-nw">
-							<div class="peer peer-greed">
-								<span id="sparklinedash2">
-								</span>
-							</div>
-							<div class="peer">
-								<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-red-50 c-red-500">
-								{{sensor_latest.day_pct_change |default_if_none:"-"}}</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="layers bd bgc-white p-20">
-					<div class="layer w-100 mB-10">
-						<h6 class="lh-1">
-						Week PCT Change</h6>
-					</div>
-					<div class="layer w-100">
-						<div class="peers ai-sb fxw-nw">
-							<div class="peer peer-greed">
-								<span id="sparklinedash3">
-								</span>
-							</div>
-							<div class="peer">
-								<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-purple-50 c-purple-500">
-								{{sensor_latest.week_pct_change |default_if_none:"-"}}</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="layers bd bgc-white p-20">
-					<div class="layer w-100 mB-10">
-						<h6 class="lh-1">
-						Month PCT Change</h6>
-					</div>
-					<div class="layer w-100">
-						<div class="peers ai-sb fxw-nw">
-							<div class="peer peer-greed">
-								<span id="sparklinedash4">
-								</span>
-							</div>
-							<div class="peer">
-								<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-blue-50 c-blue-500">
-								{{sensor_latest.month_pct_change |default_if_none:"-"}}</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+			{% endfor %}
+
 		</div>
 	</div>
 </div>
@@ -196,10 +70,10 @@
 				<div class="layer w-100 mB-20">
 
 					<div class="btn-group btn-block" role="group" aria-label="Basic example">
-						<button type="button" class="btn btn-primary {% ifequal freq 'day' %}active{% endifequal %}">Day</button>
+						<button type="button" data-value="day" class="btn btn-primary freq-btn {% ifequal freq 'day' %}active{% endifequal %}">Day</button>
 
-						<button type="button" class="btn btn-primary {% ifequal freq 'week' %}active{% endifequal %}">Week</button>
-						<button type="button" class="btn btn-primary {% ifequal freq 'month' %}active{% endifequal %}">Month</button>
+						<button type="button" data-value="week" class="btn btn-primary freq-btn {% ifequal freq 'week' %}active{% endifequal %}">Week</button>
+						<button type="button" data-value="month" class="btn btn-primary freq-btn {% ifequal freq 'month' %}active{% endifequal %}">Month</button>
 					</div>
 				</div>
 
@@ -394,6 +268,13 @@
 		window.location = new_url;
 	});
 	
+	$('.freq-btn').click(function(){
+		new_url = updateQueryStringParameter(window.location.href,
+			"freq",
+			$(this).data("value"));
+		console.log(new_url);
+		window.location = new_url;
+	});
 	var day_data = []
 	var week_data = []
 	{% if sensor_id %}

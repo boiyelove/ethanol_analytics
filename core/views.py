@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .models import UserAccessRequest, get_sensor_data
+from .models import UserAccessRequest, get_sensor_data, get_latest_data
 from .forms import BugReportForm
 from easy_pdf.views import PDFTemplateView
 
@@ -37,20 +37,25 @@ class DashboardView(LoginRequiredMixin, CanViewContentTest, TemplateView):
 		sensor_list = [{"sensor_id": sensor['sensor_id'], "sensor_description":sensor['sensor_description']} for sensor in sensor_data]
 		sensor_id = self.request.GET.get("sensor_id", None)
 		freq = self.request.GET.get("freq", 'week')
+		print('frequency is', freq)
 		entries = self.request.GET.get("entries", 10)
 		if sensor_id:
 			sensor_data = get_sensor_data(sensor_id= "'" + sensor_id + "'", n=entries)
 		else:
 			sensor_data = get_sensor_data()
 		sensor_list = [dict(tupled) for tupled in set(tuple(sensor.items()) for sensor in sensor_list)]
-		print('sensor_list[0]', sensor_list[0])
 		if (sensor_id and sensor_data): context['sensor_latest'] = sensor_data[0]
+
+		# if sensor_id: x for x in latest_dataset if x.get('sensor_id') == sensor_id
+
+		latest_dataset = get_latest_data()
+		latest_dataset = sorted(latest_dataset, key=lambda k: k["sensor_description"])
+		context['latest_dataset'] = latest_dataset
 		context['freq'] = freq
 		context['sensor_id'] = sensor_id
 		context['entries'] = entries
 		context['sensor_list'] = sensor_list
-		context['sensor_data'] = sensor_data
-		context['freq'] = 'week'
+		context['sensor_data'] = latest_dataset
 		return context
 
 
