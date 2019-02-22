@@ -8,7 +8,7 @@
 	</div>
 	<div class="masonry-item w-100">
 		<div class="row gap-20">
-			{% for eachsensor in latest_dataset %}
+			{% for eachsensor in sensor_data %}
 			<div class="col-md-3">
 				<div class="layers bd bgc-white p-20">
 					<div class="layer w-100 mB-10">
@@ -54,7 +54,7 @@
 			<div class="layers">
 				<div class="layer w-100 pX-20 pT-20">
 					<h6 class="lh-1">
-					Monthly Stats</h6>
+					Monthly Stats - {{ picked.sensor_description }}</h6>
 				</div>
 				<div class="layer w-100 p-20">
 					<canvas id="sensor-line-chart" height="220">
@@ -79,7 +79,7 @@
 
 				<div class="layer w-100 mB-20">
 					<select id="sensor_id" name="sensor_id" class="form-control">
-						{% for sensoropt in sensor_list %}
+						{% for sensoropt in sensor_data %}
 						<Option value="{{sensoropt.sensor_id}}" {% ifequal sensor_id sensoropt.sensor_id %} selected="selected" {% endifequal %}>{{ sensoropt.sensor_description}}</Option>
 						{% endfor %}
 					</select>
@@ -277,9 +277,9 @@
 	});
 	var day_data = []
 	var week_data = []
-	{% if sensor_id %}
 
-	{% for sensor in sensor_data %}
+
+	{% for sensor in sensorgraph_data %}
 		{% if sensor.day_avg != None %}
 			arr_data = {x: new Date("{{sensor.date.isoformat }}"),
 						y: {{sensor.day_avg|floatformat:2}} }
@@ -297,8 +297,6 @@
 	{% empty %}
 
 	{% endfor %}
-
-	{% endif %}
 	var ctx = document.getElementById("sensor-line-chart");
 	ctx.height = 300;
 	new Chart(ctx, {

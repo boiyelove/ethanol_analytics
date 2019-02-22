@@ -33,29 +33,39 @@ class DashboardView(LoginRequiredMixin, CanViewContentTest, TemplateView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['permission_requests'] = UserAccessRequest.objects.all()
-		sensor_data = get_sensor_data()
-		sensor_list = [{"sensor_id": sensor['sensor_id'], "sensor_description":sensor['sensor_description']} for sensor in sensor_data]
+
+
+		sensor_data = get_latest_data()
+		sensor_data = sorted(sensor_data, key=lambda k: k["sensor_description"])
+
+
+		# sensor_data = get_sensor_data()
+		# sensor_list = [{"sensor_id": sensor['sensor_id'], "sensor_description":sensor['sensor_description']} for sensor in sensor_data]
+
 		sensor_id = self.request.GET.get("sensor_id", None)
 		freq = self.request.GET.get("freq", 'week')
-		print('frequency is', freq)
 		entries = self.request.GET.get("entries", 10)
+
+		# else:
+		# 	sensor_data = get_sensor_data()
+		# sensor_list = [dict(tupled) for tupled in set(tuple(sensor.items()) for sensor in sensor_list)]
+		# if (sensor_id and sensor_data): context['sensor_latest'] = sensor_data[0]	
+		
 		if sensor_id:
-			sensor_data = get_sensor_data(sensor_id= "'" + sensor_id + "'", n=entries)
-		else:
-			sensor_data = get_sensor_data()
-		sensor_list = [dict(tupled) for tupled in set(tuple(sensor.items()) for sensor in sensor_list)]
-		if (sensor_id and sensor_data): context['sensor_latest'] = sensor_data[0]
-
-		# if sensor_id: x for x in latest_dataset if x.get('sensor_id') == sensor_id
-
-		latest_dataset = get_latest_data()
-		latest_dataset = sorted(latest_dataset, key=lambda k: k["sensor_description"])
-		context['latest_dataset'] = latest_dataset
+			picked = [x for x in sensor_data if x.get('sensor_id') == sensor_id]
+			filtered = [x for x in sensor_data if x.get('sensor_id') != sensor_id]
+			sensor_data = picked + filtered
+		
+		picked = sensor_data[0]	
+		sensorgraph_data = get_sensor_data(sensor_id= "'" + picked["sensor_id"] + "'")
+		context['latest_dataset'] = sensor_data
 		context['freq'] = freq
 		context['sensor_id'] = sensor_id
 		context['entries'] = entries
-		context['sensor_list'] = sensor_list
-		context['sensor_data'] = latest_dataset
+		context['picked'] = picked
+		# context['sensor_list'] = sensor_list
+		context['sensor_data'] = sensor_data
+		context['sensorgraph_data'] = sensorgraph_data
 		return context
 
 
