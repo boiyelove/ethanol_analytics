@@ -26,8 +26,6 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th scope="col">date</th>
-							<th scope="col">sensor_id</th>
 							<th scope="col">sensor_description</th>
 							<th scope="col">day_avg</th>
 							<th scope="col">week_avg</th>
@@ -40,8 +38,6 @@
 					<tbody>
 						{% for sensor in sensor_data %}
 						<tr>
-							<td>{{ sensor.date }}</td>
-							<td>{{ sensor.sensor_id}}</td>
 							<td>{{ sensor.sensor_description}}</td>
 							<td>{{ sensor.day_avg|floatformat:2 }}</td>
 							<td>{{ sensor.week_avg|floatformat:2 }}</td>
