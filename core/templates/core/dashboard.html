@@ -54,7 +54,7 @@
 			<div class="layers">
 				<div class="layer w-100 pX-20 pT-20">
 					<h6 class="lh-1">
-					Monthly Stats - {{ picked.sensor_description }}</h6>
+					{{ picked.sensor_description }}</h6>
 				</div>
 				<div class="layer w-100 p-20">
 					<canvas id="sensor-line-chart" height="220">
@@ -321,7 +321,7 @@
 			},
 			options: {
 			title: {
-				display: true,
+				display: false,
 				text: 'Sensor Data Graph'
 			},
 			scales: {
