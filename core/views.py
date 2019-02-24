@@ -40,8 +40,25 @@ class DashboardView(LoginRequiredMixin, CanViewContentTest, TemplateView):
 			picked = [x for x in sensor_data if x.get('sensor_id') == sensor_id]
 			filtered = [x for x in sensor_data if x.get('sensor_id') != sensor_id]
 			sensor_data = picked + filtered	
+		#dec2 = lambda dec2:"%.2f" % float(x)  
+		def get_datarep(x, perc=False):
+			if x is None:
+				return '-'
+			else:
+				if perc:
+					return "%.2f%%" % float(x)
+				else:
+					return "%.2f" % float(x)
+
 		picked = sensor_data[0]	
+		freqavg = freq + '_avg'
+		freqchange = freq + '_pct_change'
+		sensor_datalist = [{"sensor_description":sensor["sensor_description"],
+								'data_avg': get_datarep(sensor[freqavg]),
+								"data_change": get_datarep(sensor[freqchange],perc=True)} for sensor in sensor_data]
+
 		sensorgraph_data = get_sensor_data(sensor_id= "'" + picked["sensor_id"] + "'")
+		context['sensor_datalist'] = sensor_datalist
 		context['latest_dataset'] = sensor_data
 		context['freq'] = freq
 		context['sensor_id'] = sensor_id

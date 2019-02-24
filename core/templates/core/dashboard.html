@@ -8,34 +8,22 @@
 	</div>
 	<div class="masonry-item w-100">
 		<div class="row gap-20">
-			{% for eachsensor in sensor_data %}
+			{% for sensor in sensor_datalist %}
 			<div class="col-md-3">
 				<div class="layers bd bgc-white p-20">
 					<div class="layer w-100 mB-10">
 						<h6 class="lh-1">
-						{{eachsensor.sensor_description}}</h6>
+						{{sensor.sensor_description}}</h6>
 					</div>
 					<div class="layer w-100">
 						<div class="peers ai-sb fxw-nw">
 
 							<div class="peer peer-greed">
-							{% if freq == "day" %}
-								{{eachsensor.day_avg|default_if_none:"-"|floatformat:2}}
-							{% elif freq == 'week' %}
-								{{eachsensor.week_avg|default_if_none:"-"|floatformat:2}}
-							{% elif freq == 'month' %}
-								{{eachsensor.month_avg|default_if_none:"-"|floatformat:2}}
-							{% endif %}
+								{{ sensor.data_avg }}
 							</div>
 							<div class="peer">
-								<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500">
-							{% if freq == 'day' %}
-								{{eachsensor.day_pct_change|default_if_none:"-"|floatformat:2}}
-							{% elif freq == 'week' %}
-								{{eachsensor.week_pct_change|default_if_none:"-"|floatformat:2}}
-							{% elif freq == 'month' %}
-								{{eachsensor.month_pct_change|default_if_none:"-"|floatformat:2}}
-							{% endif %}
+								<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 {% if sensor.data_change < '0' %} bgc-red-50  c-red-500 {% else %} bgc-green-50 c-green-500 {% endif %}">
+									{{ sensor.data_change }}
 								</span>
 							</div>
 						</div>
