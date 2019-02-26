@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .models import UserAccessRequest, get_sensor_data, get_latest_data
+from .models import UserAccessRequest, get_sensor_data, get_latest_data, get_report_data
 from .forms import BugReportForm
 from easy_pdf.views import PDFTemplateView
 
@@ -138,3 +138,7 @@ class DownloadPDF(LoginRequiredMixin, PDFTemplateView):
 		context['sensor_data'] = sensor_data
 		context['freq'] = 'week'
 		return super().get_context_data(pagesize="A4 landscape",**context)
+
+class ReportView(LoginRequiredMixin, TemplateView):
+	template_name = "core/reports.html"
+	extra_context = {"reports": get_report_data}
