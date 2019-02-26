@@ -139,6 +139,7 @@ class DownloadPDF(LoginRequiredMixin, PDFTemplateView):
 		context['freq'] = 'week'
 		return super().get_context_data(pagesize="A4 landscape",**context)
 
+
 class ReportView(LoginRequiredMixin, TemplateView):
 	template_name = "core/reports.html"
-	extra_context = {"reports": get_report_data}
+	extra_context = {"reportlist": get_report_data, page_title: "Reports"}
