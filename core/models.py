@@ -25,3 +25,14 @@ def get_latest_data(sensor_id="'PORT_CIP.AB_B.F44:111','PORT_CIP.AB_B.F44:110','
 	with connections['sensors'].cursor() as cursor:
 		cursor.execute("Select date, b.sensor_description, a.sensor_id,sensor_units, day_avg, week_avg, month_avg, day_pct_change, week_pct_change, month_pct_change , asset_category, asset_name from kpi_agg_table a inner join sensor_metadata b on a.sensor_id = b.sensor_id and a.sensor_id in (%s) order by date desc limit 8" % sensor_id)
 		return dictfetchall(cursor)
+
+def get_report_data():
+	with connections['sensors'].cursor() as cursor:
+		cursor.execute("Select * from dash_app_metadata")
+		return dictfetchall(cursor)
+
+# class Report(TimeStampedModel):
+# 	name = models.CharField(max_length=120)
+# 	description = models.TextField()
+# 	filename = models.FileField(uploads_to='useruploads/reports')
+
