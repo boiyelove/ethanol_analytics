@@ -9,7 +9,15 @@
 				<h6 class="card-title">{{ report.name }}</h6>
 				<p>{{ report.description }}</p>
 				<br>
-				<button class="btn btn-primary">View Report</button> <span>Updated {{ report.update_date }}</span>
+				<div class="row">
+					<div class="col-7">
+						<button class="btn btn-primary">View Report</button>
+					</div>
+					<div class="col-5 text-right">
+						<small>Updated {{ report.update_date }}</small>
+					</div>
+				</div>
+
 			</div>
 		</div>
 	</div>
