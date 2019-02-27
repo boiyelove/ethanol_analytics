@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load reports_extras %}
 <!doctype html>
 <html>
 <head>
@@ -89,18 +90,13 @@
 									<a class="sidebar-link" href="{% url 'reports:view-report' %}">
 									All Reports</a>
 								</li>
+								{% all_reports as report_list %}
+								{% for report in report_list %}
 								<li>
-									<a class="sidebar-link" href="datatable.html">
-									Dash App 1</a>
+									<a class="sidebar-link" href="javascript:void(0);">
+									{{ report.name }}</a>
 								</li>
-								<li>
-									<a class="sidebar-link" href="datatable.html">
-									Dash App 2</a>
-								</li>
-								<li>
-									<a class="sidebar-link" href="datatable.html">
-									Dash App 3</a>
-								</li>
+								{% endfor %}
 							</ul>
 						</li>
 						<li class="nav-item dropdown">
