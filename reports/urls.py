@@ -6,4 +6,5 @@ app_name ='reports'
 
 urlpatterns =  [
 	path('', views.ReportView.as_view(), name='view-report'),
+	path('<int:id>/', views.ReportView.as_view(), name='view-report_detail'),
 ]

@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}
+{% load plotly_dash%}
+
+   
+{% block content %}
+<div class="row">
+	 {%plotly_direct name=report_item.name%} 
+</div>
+{% endblock %}
