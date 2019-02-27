@@ -142,4 +142,4 @@ class DownloadPDF(LoginRequiredMixin, PDFTemplateView):
 
 class ReportView(LoginRequiredMixin, TemplateView):
 	template_name = "core/reports.html"
-	extra_context = {"reportlist": get_report_data, page_title: "Reports"}
+	extra_context = {"reportlist": get_report_data, "page_title": "Reports"}
