@@ -12,5 +12,6 @@ class ReportView(LoginRequiredMixin, TemplateView):
 		if id:
 			print(get_report_data(id=id))
 			kwargs['report_item'] = get_report_data(id=id)
+			kwargs['use_plotlydash'] = True
 			self.template_name = "reports/reports_detail.html"
 		return super().get_context_data(**kwargs)
