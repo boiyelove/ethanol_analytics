@@ -31,8 +31,3 @@ def get_report_data():
 		cursor.execute("Select * from dash_app_metadata")
 		return dictfetchall(cursor)
 
-# class Report(TimeStampedModel):
-# 	name = models.CharField(max_length=120)
-# 	description = models.TextField()
-# 	filename = models.FileField(uploads_to='useruploads/reports')
-
