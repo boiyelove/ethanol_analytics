@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core.apps.CoreConfig',
+    'reports.apps.ReportsConfig',
     'model_utils',
     'bootstrap4',
     'allauth',
