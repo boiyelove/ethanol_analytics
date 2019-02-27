@@ -1,5 +1,5 @@
 from django.urls import path
-from .dash_apps import dash_app1
+from .dashapps import dash_app1
 from django.conf import settings
 from django.conf.urls.static import static
 from . import views
