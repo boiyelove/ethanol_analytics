@@ -4,8 +4,8 @@
    
 {% block content %}
 <div class="row">
-	<div class="card border-dark">
-  <div class="card-body">
+	<div class="card border-dark w-100">
+  <div class="card-body w-100">
     <div class="{%plotly_class name=report_item.id template_type="div-direct"%}">
       {%plotly_direct name=report_item.id %}
     </div>

@@ -1,6 +1,8 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+import dash_bootstrap_components as dbc
+from django_plotly_dash import DjangoDash
 
 #external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = DjangoDash('3',external_stylesheets=[dbc.themes.BOOTSTRAP])
