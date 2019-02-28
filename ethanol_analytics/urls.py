@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,3 +25,7 @@ urlpatterns = [
     path('reports/', include('reports.urls')),
     path('django_plotly_dash/', include('django_plotly_dash.urls')),
 ]
+
+# Add in static routes so daphne can serve files; these should
+# be masked eg with nginx for production use
+# urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
