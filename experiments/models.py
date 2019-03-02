@@ -4,6 +4,7 @@ from model_utils.models import TimeStampedModel
 
 User = settings.AUTH_USER_MODEL
 EXPERIMENT_CHOICES = ((0,'created'), (1,'running'),(2,'completed'))
+ACTIVEFLAG_CHOICES = ((0, 'inactive'), (1, 'active'))
 # Create your models here.
 class Asset(TimeStampedModel):
 	name = models.CharField(max_length=120)
@@ -17,7 +18,7 @@ class Experiment(TimeStampedModel):
 	goal = models.CharField(max_length=120)
 	additional_comments = models.TextField()
 	assets = models.ManyToManyField(Asset)
-	active_flag = models.BooleanField()
+	active_flag = models.PositiveIntegerField(default=1, choices=ACTIVEFLAG_CHOICES)
 	status = models.PositiveIntegerField(default=0, choices=EXPERIMENT_CHOICES)
 	created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author')
 	modified_by = models.ManyToManyField(User, related_name='editors')
