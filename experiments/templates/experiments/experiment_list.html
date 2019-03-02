@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% load staticfiles %}
+{% load bootstrap4 %}
+{% block content %}
+
+<div class="masonry-item col-md-6 ta-c" style="position: relative; margin-left:auto; margin-right:auto;">
+	<div class="bd bgc-white">
+		<div class="layers">
+			<div class="layer w-100 p-20">
+				<h5>Experiment List</h5>
+			</div>
+			<div class="layer w-100">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">Test name</th>
+								<th scope="col">Goal</th>
+								<th scope="col">Start date</th>
+								<th scope="col">Author</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for experiment in experiment_list %}
+							<tr>
+								<th scope="row">1</th>
+								<td>{{ experiment.name }}</td>
+								<td>{{ experiment.goal }}</td>
+								<td>{{ experiment.start_date }}</td>
+								<td>{{ experiment.created_by }}</td>
+							</tr>
+							{% endfor %}
+							
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
