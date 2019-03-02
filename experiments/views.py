@@ -7,18 +7,18 @@ from .models import Experiment
 
 # Create your views here.
 class CreateExperiment(CreateView):
-	form = ExperimentForm
+	form_class = ExperimentForm
 	success_url = reverse_lazy('list-experiments')
-	template_name = 'experiments/forms.html'
+	template_name = 'experiments/experiment_form.html'
 
 	def form_valid(self, form):
 		form.author = self.request.user
 		return super().form_valid(form)
 
 class UpdateExperiment(UpdateView):
-	form = ExperimentForm
+	form_class = ExperimentForm
 	success_url = reverse_lazy('list-experiments')
-	template_name = 'experiments/forms.html'
+	template_name = 'experiments/experiment_form.html'
 
 	def form_valid(self, form):
 		form.author = self.request.user
