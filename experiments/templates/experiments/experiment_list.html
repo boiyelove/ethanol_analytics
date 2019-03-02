@@ -14,10 +14,13 @@
 						<thead>
 							<tr>
 								<th scope="col">#</th>
-								<th scope="col">Test name</th>
-								<th scope="col">Goal</th>
+								<th scope="col">Experient name</th>
 								<th scope="col">Start date</th>
-								<th scope="col">Author</th>
+								<th scope="col">End date</th>
+								<th scope="col">Assets</th>
+								<th scope="col">Goal</th>
+								<th scope="col">Status</th>
+								<th scope="col">Created By</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -25,8 +28,11 @@
 							<tr>
 								<th scope="row">1</th>
 								<td>{{ experiment.name }}</td>
-								<td>{{ experiment.goal }}</td>
 								<td>{{ experiment.start_date }}</td>
+								<td>{{ experiment.end_date }}</td>
+								<td>{{ experiment.asset }}</td>
+								<td>{{ experiment.goal }}</td>
+								<td>{{ experiment.status }}</td>
 								<td>{{ experiment.created_by }}</td>
 							</tr>
 							{% endfor %}
