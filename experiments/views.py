@@ -7,7 +7,7 @@ from .models import Experiment
 
 # Create your views here.
 class CreateExperiment(CreateView):
-	form = ExperiementForm
+	form = ExperimentForm
 	success_url = reverse_lazy('list-experiments')
 	template_name = 'experiments/forms.html'
 
@@ -16,7 +16,7 @@ class CreateExperiment(CreateView):
 		return super().form_valid(form)
 
 class UpdateExperiment(UpdateView):
-	form = ExperiementForm
+	form = ExperimentForm
 	success_url = reverse_lazy('list-experiments')
 	template_name = 'experiments/forms.html'
 
@@ -24,7 +24,7 @@ class UpdateExperiment(UpdateView):
 		form.author = self.request.user
 		return super().form_valid(form)
 
-class ExperimentList(listView):
+class ExperimentList(ListView):
 	model = Experiment
 	template_name = 'experiments/experiment_list.html'
 
