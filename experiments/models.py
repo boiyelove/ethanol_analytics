@@ -22,3 +22,24 @@ class Experiment(TimeStampedModel):
 	status = models.PositiveIntegerField(default=0, choices=EXPERIMENT_CHOICES)
 	created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author')
 	modified_by = models.ManyToManyField(User, related_name='editors')
+
+class Metric(TimeStampedModel):
+	name = models.CharField(max_length=160)
+
+class AssetCategory(TimeStampedModel):
+	name = models.CharField(max_length=160)
+
+class ExperimentResult(TimeStampedModel):
+	asset_category = models.ForeignKey(AssetCategory, on_delete=models.SET_NULL, null=True)
+	metric = models.ForeignKey(Metric, on_delete=models.SET_NULL, null=True)
+	old_mean = models.FloatField()
+	new_mean = models.FloatField()
+	mean_difference = models.FloatField()
+	pct_diff_mean = models.FloatField()
+	agg_level = models.FloatField()
+	sensor_id = models.FloatField()
+	old_sd = models.FloatField()
+	new_sd = models.FloatField()
+	standard_dev_diff = models.FloatField()
+	f_statistics = models.FloatField()
+	p_value = models.FloatField()
