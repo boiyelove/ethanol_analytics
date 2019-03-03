@@ -40,6 +40,7 @@ class ExperimentResult(TimeStampedModel):
 	sensor_id = models.FloatField()
 	old_sd = models.FloatField()
 	new_sd = models.FloatField()
+	pct_diff_mean = models.FloatField()
 	standard_dev_diff = models.FloatField()
 	f_statistics = models.FloatField()
 	p_value = models.FloatField()
