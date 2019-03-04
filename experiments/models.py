@@ -9,6 +9,9 @@ ACTIVEFLAG_CHOICES = ((0, 'inactive'), (1, 'active'))
 class Asset(TimeStampedModel):
 	name = models.CharField(max_length=120)
 
+	def __str__(self):
+		return self.name
+
 class Experiment(TimeStampedModel):
 	test_name = models.CharField(max_length=120)
 	start_date = models.DateField()
@@ -23,9 +26,18 @@ class Experiment(TimeStampedModel):
 	created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author')
 	modified_by = models.ManyToManyField(User, related_name='editors')
 
+	def __str__(self):
+		return self.test_name
+
 class Metric(TimeStampedModel):
 	name = models.CharField(max_length=160)
 
+	def __str__(sekf):
+		return self.name
+
 class AssetCategory(TimeStampedModel):
 	name = models.CharField(max_length=160)
+
+	def __str__(self):
+		return self.name
 
