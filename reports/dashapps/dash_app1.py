@@ -8,7 +8,13 @@ import json
 import dash_bootstrap_components as dbc
 from .py_helpers import db_sql
 from django_plotly_dash import DjangoDash
+import plotly.graph_objs as go
+import plotly.figure_factory as ff
+import numpy as np
 
+plotly_config = {'modeBarButtonsToRemove':['sendDataToCloud','zoom2d','pan2d','select2d','lasso2d','toggleSpikelines',
+                'zoomIn2d','zoomOut2d','autoScale2d','resetScale2d','hoverClosestCartesian','hoverCompareCartesian'],
+                'displaylogo':False}
 app = DjangoDash('1',external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 #app2 = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
@@ -29,6 +35,7 @@ def get_batch_data(ferm_num=None):
                 inner join dash.current_ferms_lab_data_kpi b
                 on a.sensor_id = b.sensor_id and a.batch_id = {}""".format(batch_id)
     df_data = pd.read_sql(SQL_data,engine)
+
     return df, df_data
 
 
@@ -50,9 +57,10 @@ header =  html.Div(
         dbc.Row(
             [
                 dbc.Col(html.H4('Batch ID: ', id = 'header_batch_id',style={'textAlign':'left'}),width=2),
-                dbc.Col(dcc.Dropdown(id='lab_test_dropdown',placeholder = 'Lab Test'), width=2),
-                dbc.Col(dcc.Dropdown(id='lab_period_dropdown',placeholder = 'Lab Test timeframe',), width=2),
                 dbc.Col(html.H4('Duration: ', id = 'batch_duration'), width=2),
+                dbc.Col(dcc.Dropdown(id='lab_test_dropdown',placeholder = 'Lab Test'), width=4),
+                dbc.Col(dcc.Dropdown(id='lab_period_dropdown',placeholder = 'Lab Test timeframe',), width=4),
+                
             ]
         ),
               
@@ -65,7 +73,20 @@ header =  html.Div(
 body = html.Div([ 
     dbc.Row([ 
         dbc.Col([
-            html.Div(id='body_graph') 
+            dbc.Row([
+                dbc.Col(
+                     html.Div(id='boxplot_1'),
+                     width=4
+                ),
+                dbc.Col(
+                html.Div(id='body_graph') ,width=8)
+            ]),
+            dbc.Row([
+                dbc.Col(
+                html.Div(id='body_graph_2')
+                ,width=12)
+            ]),
+            
         ]
         ,width=8,md=8,sm=12), 
         dbc.Col([dash_table.DataTable(
@@ -193,11 +214,100 @@ def show_data(value,df):
     df = df[['test','value','week_avg','week_pct_change','month_avg','month_pct_change']].sort_values('test').to_dict('rows')
     return df
 
-
+## Graph
 @app.callback(
     Output('body_graph','children'),
     [Input('lab_test_dropdown','value')],
     [State('hidden_data','children')]
 )
 def graph_data(value,df):
-    return 'asdfasdf'
+    datasets = json.loads(df)
+    df = pd.read_json(datasets['df_data'],orient='split')
+    df = df[df['test']==value].sort_values('datetime').reset_index(drop=True)
+    data = []
+    for i in df.test.unique():
+        trace = go.Scatter(
+            x = df[df['test']==i].datetime,
+            y = df[df['test']==i].value,
+            name = i,
+        )
+        data.append(trace)
+    return dcc.Graph(
+    config=plotly_config,
+    figure=go.Figure(
+        data=data,
+        layout=go.Layout(
+            title='Batch: {} - {}'.format(df['batch_id'][0],df['test'][0]),
+            showlegend=False,
+            margin=go.layout.Margin(l=40, r=0, t=40, b=30)
+        )
+    ),
+    style={'height': 300},
+    id='my-graph'
+)
+
+
+@app.callback(
+    Output('boxplot_1','children'),
+    [Input('lab_test_dropdown','value'),
+    Input('lab_period_dropdown','value')],
+    [State('hidden_data','children')]
+)
+def graph_data(test,lab_period,df):
+    datasets = json.loads(df)
+    sensor_id = lab_period + '.' + test
+    SQL = """Select * from raw_lab_data where sensor_id = '{}' and datetime > current_Date - 180 and value::numeric != 0""".format(sensor_id)
+    engine = db_sql.engine
+    df = pd.read_sql(SQL,engine)
+
+    df2 = pd.read_json(datasets['df_data'],orient='split')
+    df2 = df2[df2['sensor_id']==sensor_id].sort_values('datetime').reset_index(drop=True)
+    trace = go.Scatter(
+        x=['Batch {}'.format(df2.batch_id[0])],
+        y=df2.value,
+        name= 'Batch {}'.format(df2.batch_id[0]),
+        marker = {'size':10}
+    )
+    trace0 = go.Box(
+        name='Historical Values',
+        y=df.value,
+        jitter = 0.3,
+        pointpos = -1,
+        boxpoints='all',
+        )
+    data = [trace0,trace]
+    return dcc.Graph(figure=go.Figure(
+            data=data,
+            layout=go.Layout(showlegend=False,)),config=plotly_config)
+
+
+@app.callback(
+    Output('body_graph_2','children'),
+    [Input('lab_test_dropdown','value'),
+    Input('lab_period_dropdown','value')],
+    [State('hidden_data','children')]
+)
+def graph_data(test,lab_period,df):
+    sensor_id = lab_period + '.' + test
+    SQL = """Select batch_id, datetime, value from raw_lab_data where sensor_id = '{}' and datetime > current_Date - 180""".format(sensor_id)
+    engine = db_sql.engine
+    df = pd.read_sql(SQL,engine)
+    df = df.sort_values('datetime').reset_index(drop=True)
+    data = [go.Scatter(
+            x = df.datetime,
+            y = df.value,
+            name = 'i',
+        )]
+    return dcc.Graph(
+        config = plotly_config,
+        
+        figure=go.Figure(
+            data=data,
+            layout=go.Layout(
+                showlegend=False,
+                margin=go.layout.Margin(l=40, r=0, t=40, b=30)
+            )
+            ),
+            style={'height': 300},
+            id='g2'
+        )
