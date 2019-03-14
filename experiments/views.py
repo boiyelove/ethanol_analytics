@@ -5,7 +5,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.models import User
 from .forms import ExperimentForm
-from .models import Experiment
+from .models import Experiment, get_assets
 
 # Create your views here.
 class CreateExperiment(CreateView):
@@ -18,7 +18,6 @@ class CreateExperiment(CreateView):
 		self.object.created_by = self.request.user
 		self.object.save()
 		return HttpResponseRedirect(self.success_url)
-
 
 class UpdateExperiment(UpdateView):
 	form_class = ExperimentForm

@@ -11,13 +11,29 @@
 			</div>
 		</div>
 		<div class="ta-l bdT w-100 p-20">
-		<form action="" method="post">
-			{% csrf_token %}
-			{% bootstrap_form form %}
-		
-        	<button type="submit" class="btn btn-primary btn-block">Submit</button>
+			<form action="" method="post">
+				{% bootstrap_form_errors form %}
+				{% csrf_token %}
+				<div class="form-group"><label for="id_test_name">Test name</label><input type="text" name="test_name" maxlength="120" class="form-control" placeholder="Test name" title="" required="" id="id_test_name" {% if form.test_name.value %}value="{{form.test_name.value}}"{% endif %}></div>
+				<div class="form-group"><label for="id_change_date">Change date</label><input type="date" name="change_date" class="form-control" placeholder="Change date" title="" required="" id="id_change_date" {% if form.change_date.value %}value="{{form.change_date.value}}"{% endif %}></div>
 
-		</form>
+				<div class="form-group row">
+					<div class="col-6"><label for="id_lookback_window">Lookback window</label><input type="number" name="lookback_window" min="0" class="form-control" placeholder="Lookback window" title="" required="" id="id_lookback_window" {% if form.lookback_window.value %}value="{{form.lookback_window.value}}"{% endif %}>
+					</div>
+					<div class="col-6">
+						<label for="id_analysis_window">Analysis window</label><input type="number" name="analysis_window" min="0" class="form-control" placeholder="Analysis window" title="" required="" id="id_analysis_window" {% if form.analysis_window.value %}value="{{form.analysis_window.value}}"{% endif %}>
+					</div>
+				</div>
+				<div class="form-group"><label for="id_goal">Goal</label><textarea name="goal" cols="40" rows="3" maxlength="120" class="form-control" placeholder="Goal" title="" required="" id="id_goal">{% if form.goal.value %}{{form.goal.value}}{% endif %}</textarea></div>
+				<div class="form-group"><label for="id_additional_comments">Additional comments</label><textarea name="additional_comments" cols="40" rows="10" class="form-control" placeholder="Additional comments" title="" required="" id="id_additional_comments">{% if form.goal.value %}{{form.goal.value}}{% endif %}</textarea></div>
+				<div class="form-group"><label for="id_assets">Assets</label>
+					{{ form.assets }}
+				</div>
+
+
+				<button type="submit" class="btn btn-primary btn-block">Submit</button>
+
+			</form>
 		</div>
 
 	</div>
