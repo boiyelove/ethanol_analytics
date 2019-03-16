@@ -1,16 +1,19 @@
 from django import forms
-from .models import Experiment
+from .models import Experiment, ASSET_CHOICES
 
 
 class ExperimentForm(forms.ModelForm):
-	def __init__(self, *args, **kwargs):
-		super(ExperimentForm, self).__init__(*args, **kwargs)
-		self.fields['assets'].empty_label=None
+	assets = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=ASSET_CHOICES)
+
 
 	class Meta:
 		model = Experiment
 		exclude = ('active_flag', 'status', 'created_by', 'modified_by')
 		widgets = {
 		'goal': forms.Textarea(attrs={'rows':3}),
-		'assets': forms.CheckboxSelectMultiple,
 		}
+
+	def clean_assets(self):
+		assets = self.cleaned_data.get('assets')
+		assets = ','.join(assets)
+		return assets

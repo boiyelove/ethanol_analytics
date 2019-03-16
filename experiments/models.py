@@ -28,7 +28,7 @@ class Experiment(TimeStampedModel):
 	analysis_window = models.PositiveIntegerField()
 	goal = models.CharField(max_length=120)
 	additional_comments = models.TextField()
-	assets = models.CharField(max_length=500, choices=ASSET_CHOICES)
+	assets = models.CharField(max_length=500)
 	active_flag = models.PositiveIntegerField(default=1, choices=ACTIVEFLAG_CHOICES)
 	status = models.PositiveIntegerField(default=0, choices=EXPERIMENT_CHOICES)
 	created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author')
@@ -43,6 +43,9 @@ class Experiment(TimeStampedModel):
 	def assets_from_list(data):
 		self.assets = ','.join(data)
 		return self
+
+	def get_status(self):
+		return EXPERIMENT_CHOICES[self.status][1]
 
 class Metric(TimeStampedModel):
 	name = models.CharField(max_length=160)
