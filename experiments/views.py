@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.models import User
+from core.models import get_latest_data
 from .forms import ExperimentForm
 from .models import Experiment, get_assets
 
@@ -38,3 +39,9 @@ class ExperimentList(ListView):
 class ExperimentDetail(DetailView):
 	model = Experiment
 	template_name = 'experiments/experiment_detail.html'
+
+	def get_context_data(self, **kwargs):
+		kwargs = super().get_context_data(**kwargs)
+		kwargs['experiment_list'] = Experiment.objects.all()
+		kwargs['sensor_data'] = get_latest_data()
+		return kwargs

@@ -25,7 +25,7 @@
 						<tbody>
 							{% for experiment in experiment_list %}
 							<tr>
-								<td>{{ experiment.test_name }}</td>
+								<td><a href="{% url 'experiments:view-experiment' experiment.id %}">{{ experiment.test_name }}</a></td>
 								<td>{{ experiment.change_date }}</td>
 								<td>{% for asset in experiment.get_assets %}
 									{% if forloop.last %}
