@@ -42,8 +42,11 @@ class ExperimentDetail(DetailView):
 
 	def get_context_data(self, **kwargs):
 		kwargs = super().get_context_data(**kwargs)
+		id = self.request.GET.get('id', None)
+		if id:
+			kwargs['report_item'] = get_report_data(id=id)
 		kwargs['experiment_list'] = Experiment.objects.all()
 		kwargs['sensor_data'] = get_latest_data()
-		kwargs['experiment_result'] =  Experiment.get_experiment_result()
+		kwargs['experiment_resultlist'] =  Experiment.get_experiment_result()
 		kwargs['numerical_datalist'] =  Experiment.get_numerical_data()
 		return kwargs

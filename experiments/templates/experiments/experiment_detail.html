@@ -28,24 +28,28 @@
 						{% endfor %}
 					</select>
 					<br>
-			<table class="table table-striped">
+			<table class="table table-striped w-100">
 				<thead>
 					<tr>
 
-						<th scope="col" width="40%">Sensor</th>
-						<th scope="col" width="10%">Value</th>
-						<th scope="col" width="25%">Time</th>
-						<th scope="col" width="25%">Group</th>
+						<th scope="col">Mean</th>
+						<th scope="col">New Mean</th>
+						<th scope="col">SD</th>
+						<th scope="col">New SD</th>
+						<th scope="col">Statistic</th>
+						<th scope="col">PValue</th>
 
 					</tr>
 				</thead>
 				<tbody>
-					{% for numerical_data in numerical_datalist %}
+					{% for result_item in experiment_resultlist %}
 					<tr>
-						<td>{{ numerical_data.sensor_description }}</td>
-						<td>{{ numerical_data.value|floatformat:2 }}</td>
-						<td>{{ numerical_data.time }}</td>
-						<td>{{ numerical_data.time }}</td>
+						<td>{{ result_item.mean|floatformat:2 }}</td>
+						<td>{{ result_item.new_mean|floatformat:2 }}</td>
+						<td>{{ result_item.new_sd|floatformat:2 }}</td>
+						<td>{{ result_item.sd|floatformat:2 }}</td>
+						<td>{{ result_item.statistic|floatformat:2 }}</td>
+						<td>{{ result_item.pvalue|floatformat:2 }}</td>
 					</tr>
 					{% endfor %}
 
@@ -66,30 +70,19 @@
 	new Chart(document.getElementById("mixed-chart"), {
     type: 'bar',
     data: {
-      labels: ["1900", "1950", "1999", "2050"],
+      labels: [{% for numerical_data in numerical_datalist %} "{{ numerical_data.value|floatformat:2 }}", {% endfor %}],
       datasets: [{
-          label: "Europe",
-          type: "line",
-          borderColor: "#8e5ea2",
-          data: [408,547,675,734],
-          fill: false
-        }, {
           label: "Africa",
           type: "line",
           borderColor: "#3e95cd",
-          data: [133,221,783,2478],
+          data: [{% for numerical_data in numerical_datalist %} {{ numerical_data.value|floatformat:2 }}, {% endfor %}],
           fill: false
-        }, {
-          label: "Europe",
-          type: "bar",
-          backgroundColor: "rgba(0,0,0,0.2)",
-          data: [408,547,675,734],
-        }, {
+        },{
           label: "Africa",
           type: "bar",
           backgroundColor: "rgba(0,0,0,0.2)",
           backgroundColorHover: "#3e95cd",
-          data: [133,221,783,2478]
+          data: [{% for numerical_data in numerical_datalist %} {{ numerical_data.value|floatformat:2 }}, {% endfor %}]
         }
       ]
     },
