@@ -54,11 +54,16 @@ class Experiment(TimeStampedModel):
 			return dictfetchall(cursor)
 
 	@staticmethod
-	def get_numerical_data(id=None):
+	def get_numerical_data(sensor_id=None):
 		with connections['sensors'].cursor() as cursor:
-			cursor.execute("Select sensor_id, sensor_description, value, time, (case when time > change_date then 'after' when time <= change_date then 'before' end)as group from ( Select b.sensor_id, sensor_description, change_date, lookback_window, analysis_window,a.asset_category,d.value,d.time from (Select id, change_date, lookback_window, analysis_window, unnest(assets) as asset_category from experimentation.metadata ) a inner join sensor_metadata b on a.asset_category = b.asset_category and sensor_id = 'PORT_CIP.AB_A.F44:41' inner join hour_agg d on b.sensor_id = d.sensor_id and d.time between change_date:: date - lookback_window and change_date:: date + analysis_window) k;")
+			if sensor_id:
+				cursor.execute("Select sensor_id, sensor_description, value, time, (case when time > change_date then 'after' when time <= change_date then 'before' end)as group from ( Select b.sensor_id, sensor_description, change_date, lookback_window, analysis_window,a.asset_category,d.value,d.time from (Select id, change_date, lookback_window, analysis_window, unnest(assets) as asset_category from experimentation.metadata ) a inner join sensor_metadata b on a.asset_category = b.asset_category and sensor_id = '{}' inner join hour_agg d on b.sensor_id = d.sensor_id and d.time between change_date:: date - lookback_window and change_date:: date + analysis_window) k;".format(sensor_id))
+			else:
+				cursor.execute("Select sensor_id, sensor_description, value, time, (case when time > change_date then 'after' when time <= change_date then 'before' end)as group from ( Select b.sensor_id, sensor_description, change_date, lookback_window, analysis_window,a.asset_category,d.value,d.time from (Select id, change_date, lookback_window, analysis_window, unnest(assets) as asset_category from experimentation.metadata ) a inner join sensor_metadata b on a.asset_category = b.asset_category and sensor_id = 'PORT_CIP.AB_A.F44:41' inner join hour_agg d on b.sensor_id = d.sensor_id and d.time between change_date:: date - lookback_window and change_date:: date + analysis_window) k;")
+				
 			return dictfetchall(cursor)
 
+		
 
 
 

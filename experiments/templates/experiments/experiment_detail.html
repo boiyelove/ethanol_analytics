@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 {% load staticfiles %}
 {% load bootstrap4 %}
+{% load reports_extras %}
 {% block content %}
 
 <div class="masonry-item col-md-12 bgc-white p-20" style="position: relative; margin-left:auto; margin-right:auto;">
@@ -22,16 +23,10 @@
 	</div>
 	<div class="row">
 		<div class="col-6">
-			<select class="qdropdown form-control" name="sensor_id">
-						{% for sensoropt in sensor_data %}
-						<Option value="{{sensoropt.sensor_id}}" {% ifequal sensor_id sensoropt.sensor_id %} selected="selected" {% endifequal %}>{{ sensoropt.sensor_description}}</Option>
-						{% endfor %}
-					</select>
-					<br>
 			<table class="table table-striped w-100">
 				<thead>
 					<tr>
-
+						<th scope="col">Sensor</th>
 						<th scope="col">Mean</th>
 						<th scope="col">New Mean</th>
 						<th scope="col">SD</th>
@@ -44,12 +39,13 @@
 				<tbody>
 					{% for result_item in experiment_resultlist %}
 					<tr>
-						<td>{{ result_item.mean|floatformat:2 }}</td>
-						<td>{{ result_item.new_mean|floatformat:2 }}</td>
-						<td>{{ result_item.new_sd|floatformat:2 }}</td>
-						<td>{{ result_item.sd|floatformat:2 }}</td>
-						<td>{{ result_item.statistic|floatformat:2 }}</td>
-						<td>{{ result_item.pvalue|floatformat:2 }}</td>
+						<td>{{ result_item.sensor_description }}</td>
+						<td>{{ result_item.mean|float2rep }}</td>
+						<td>{{ result_item.new_mean|float2rep }}</td>
+						<td>{{ result_item.new_sd|float2rep }}</td>
+						<td>{{ result_item.sd|float2rep }}</td>
+						<td>{{ result_item.statistic|float2rep }}</td>
+						<td>{{ result_item.pvalue|float2rep }}</td>
 					</tr>
 					{% endfor %}
 
@@ -58,6 +54,12 @@
 		</div>
 		<div class="col-6">
 			<div class="layer">
+							<select class="qdropdown form-control" name="sensor_id">
+						{% for sensoropt in experiment_resultlist %}
+						<Option value="{{sensoropt.sensor_id}}" {% ifequal sensor_id sensoropt.sensor_id %} selected="selected" {% endifequal %}>{{ sensoropt.sensor_description}}</Option>
+						{% endfor %}
+					</select>
+					<br>
 				<canvas id="mixed-chart" width="800" height="450"></canvas>
 			</div>
 		</div>
@@ -67,6 +69,9 @@
 
 {% block extra_js %}
 <script type="text/javascript">
+
+	{% include 'core/selectsensor_js.html' %}
+
 	new Chart(document.getElementById("mixed-chart"), {
     type: 'bar',
     data: {
@@ -88,13 +93,15 @@
     },
     options: {
       title: {
-        display: true,
-        text: 'Population growth (millions): Europe & Africa'
+        display: false,
+       
       },
       legend: { display: false }
     }
 });
+	{% include 'core/selectsensor_js.html' %}
 
 </script>
 {% endblock %}
+
 

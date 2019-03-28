@@ -223,27 +223,8 @@
 	});
 
 
-	function updateQueryStringParameter(uri, key, value) {
-		var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-		var separator = uri.indexOf('?') !== -1 ? "&" : "?";
-		if (uri.match(re)) {
-			return uri.replace(re, '$1' + key + "=" + value + '$2');
-		}
-		else {
-			return uri + separator + key + "=" + value;
-		}
-	}
-
-
-
-	$('#sensor_id').change(function(){
-		new_url = updateQueryStringParameter(window.location.href,
-			"sensor_id",
-			$(this).children("option:selected").val());
-		console.log(new_url);
-		window.location = new_url;
-	});
-
+	{% include 'core/selectsensor_js.html' %}
+	
 	$('#entries').change(function(){
 		new_url = updateQueryStringParameter(window.location.href,
 			"entries",
