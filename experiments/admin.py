@@ -4,4 +4,3 @@ from .models import Asset, Experiment, Metric, AssetCategory
 
 app_models = [Asset, Experiment, Metric, AssetCategory]
 for model in app_models:admin.site.register(model)
-
