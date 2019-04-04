@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import  get_report_data
 
 # Create your views here.
-class ReportView(LoginRequiredMixin, TemplateView):
+class DataUploadView(LoginRequiredMixin, TemplateView):
 	template_name = "datauploads/datalist.html"
 
 
