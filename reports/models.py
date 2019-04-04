@@ -17,4 +17,3 @@ def get_report_data(id=None):
 			return dictfetchall(cursor)
 
 
-
