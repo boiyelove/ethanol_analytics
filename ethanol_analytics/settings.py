@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'easy_pdf',
     'django_plotly_dash.apps.DjangoPlotlyDashConfig',
     'experiments.apps.ExperimentsConfig',
+    'datauploads.apps.DatauploadsConfig',
 
 ]
 
