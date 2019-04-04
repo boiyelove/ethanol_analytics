@@ -1,4 +1,5 @@
 from django.db import connections
+from model_utils import TimeStampedModel
 from core.models import dictfetchall
 # Create your models here.
 
@@ -16,4 +17,10 @@ def get__data(id=None):
 			cursor.execute("Select * from dash_app_metadata where category = 'data_capture'")
 			return dictfetchall(cursor)
 
+class DataFileUpload(TimeStampedModel):
+	csv_file = models.FileField(upload_to='uploaded/data_uploads')
+
+class DataUpload(TimeStampedModel):
+	description = models.TextField()
+	value = models.FloatField()
 
