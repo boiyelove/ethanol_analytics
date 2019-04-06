@@ -1,4 +1,5 @@
 from django.views.generic import TemplateView
+from django.forms import formset_factory
 from django.forms.generic.edit import FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import  get_report_data
@@ -21,6 +22,7 @@ class DataUploadView(LoginRequiredMixin, TemplateView):
 
 class DataUploadForm(LoginRequiredMixin, FormView):
 	template_name = 'core/forms.html'
+	form = formset_factory(DataUploadForm)
 
 	def get_context_data(self, **kwargs):
 		f_t = kwargs.get('form', 'file')

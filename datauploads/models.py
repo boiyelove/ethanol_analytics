@@ -22,5 +22,5 @@ class DataFileUpload(TimeStampedModel):
 
 class DataUpload(TimeStampedModel):
 	description = models.TextField()
-	value = models.FloatField()
+	value = models.CharField(max_length=60)
 
