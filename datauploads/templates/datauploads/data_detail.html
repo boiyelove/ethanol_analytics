@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% load staticfiles %}
+{% load plotly_dash%}
+
+
+   
+{% block content %}
+<div class="row">
+	<div class="card border-dark w-100 p-20">
+  <div class="card-body w-100">
+    <div class="{%plotly_class name=data_item.id template_type="div-direct"%}">
+      {%plotly_direct name=data_item.id %}
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}

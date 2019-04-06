@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="row">
+	{% for data in data_list %}
+	<div class="col-4">
+		<div class="card">
+			<div class="card-body">
+				<h6 class="card-title">{{ data.name }}</h6>
+				<p>{{ data.description }}</p>
+				<br>
+				<div class="row">
+					<div class="col-7">
+						<a class="btn btn-primary" href="{% url 'datas:view-data_detail' data.id %}">View data</a>
+					</div>
+					<div class="col-5 text-right">
+						<small>Updated {{ data.update_date }}</small>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	{% empty %}
+	<h6>No datas yet</h6>
+	{% endfor %}
+</div>
+{% endblock %}
