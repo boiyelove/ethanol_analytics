@@ -7,5 +7,6 @@ app_name ='datauploads'
 
 urlpatterns =  [
 	path('', views.DataUploadView.as_view(), name='view-dataupload'),
+	path('upload_data/', views.DataUploadForm.as_view(), name='upload-data'),
 	path('<int:id>/', views.DataUploadView.as_view(), name='view-dataupload_detail'),
 ]
