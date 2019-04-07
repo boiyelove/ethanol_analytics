@@ -16,8 +16,6 @@ class DataUploadView(LoginRequiredMixin, TemplateView):
 			kwargs['data_item'] = get_uploaddata(id=id)
 			kwargs['use_plotlydash'] = True
 			self.template_name = "datauploads/data_detail.html"
-		else:
-			kwargs['data_list'] = get_uploaddata()
 		return super().get_context_data(**kwargs)
 
 class DataUploadForm(LoginRequiredMixin, FormView):

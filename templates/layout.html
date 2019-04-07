@@ -1,5 +1,6 @@
 {% load staticfiles %}
 {% load reports_extras %}
+{% load datauploads_extras %}
 {% load plotly_dash%}
 
 
@@ -179,16 +180,24 @@
 							</a>
 							<ul class="dropdown-menu">
 								<li>
+									<a class="sidebar-link" href="{% url 'datauploads:view-dataupload' %}">
+									All Methods</a>
+								</li>
+								<li>
 									<a class="sidebar-link" href="basic-table.html">
 									Upload CSV</a>
 								</li>
+								{% all_datamethods as uploaddata_list %}
+								{% for datauploaditem in uploaddata_list  %}
 								<li>
-									<a class="sidebar-link" href="datatable.html">
-									Fermentation</a>
+									<a class="sidebar-link" href="{% url 'datauploads:view-dataupload_detail' datauploaditem.id %}">
+									{{ datauploaditem.name }}</a>
 								</li>
+								{% endfor %}
 							</ul>
 						</li>
-						
+
+
 					</ul>
 				</div>
 			</div>
