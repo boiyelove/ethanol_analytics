@@ -19,11 +19,13 @@ class DataUploadView(LoginRequiredMixin, TemplateView):
 		return super().get_context_data(**kwargs)
 
 class DataUploadForm(LoginRequiredMixin, FormView):
-	template_name = 'core/forms.html'
-	form = formset_factory(DataUploadForm, extra=4)
+	template_name = 'datauploads/data_uploadform.html'
+	form_class = formset_factory(DataUploadForm, extra=4)
 
 	def get_context_data(self, **kwargs):
-		f_t = kwargs.get('form', 'file')
+		f_t = kwargs.get('form', 'form')
 		if f_t == 'file':
 			self.form_class = DataFileUploadForm
+			self.template_name = 'core/forms.html'
+			kwargs['form_name'] = "Update Data CSV"
 		return super().get_context_data(**kwargs)

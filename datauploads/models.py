@@ -21,6 +21,6 @@ class DataFileUpload(TimeStampedModel):
 	csv_file = models.FileField(upload_to='uploaded/data_uploads')
 
 class DataUpload(TimeStampedModel):
-	description = models.TextField()
+	description = models.CharField(max_length=60)
 	value = models.CharField(max_length=60)
 
