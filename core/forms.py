@@ -3,6 +3,15 @@ from django.core.mail import send_mail
 from django.conf import settings
 
 
+class FormLink:
+	def __init__(self, text, url):
+		self.name = text
+		self.url = url
+
+	def __str__(self):
+		return self.name
+
+
 class BugReportForm(forms.Form):
 	title = forms.CharField(max_length=100)
 	detail = forms.CharField(widget=forms.Textarea)
