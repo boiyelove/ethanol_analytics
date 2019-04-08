@@ -2,7 +2,7 @@ from django.db import connections, models
 from model_utils.models import TimeStampedModel
 from core.models import dictfetchall
 # Create your models here.
-
+from .dashapps import board_readings1, board_readings2
 
 def get_uploaddata(id=None):
 	
@@ -14,7 +14,7 @@ def get_uploaddata(id=None):
 			result = dict(zip(columns, result))
 			return result
 		else:
-			cursor.execute("Select * from dash_app_metadata where category = 'data_capture'")
+			cursor.execute("Select * from dash_app_metadata where category = 'data_capture' order by id")
 			return dictfetchall(cursor)
 
 class DataFileUpload(TimeStampedModel):
