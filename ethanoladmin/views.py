@@ -5,5 +5,5 @@ from core.views import CanViewContentTest
 # Create your views here.
 
 
-class AdminMain(oginRequiredMixin, CanViewContentTest, TemplateView):
+class AdminMain(LoginRequiredMixin, CanViewContentTest, TemplateView):
 	template_name = 'ethanoladmin/admin_main.html'
