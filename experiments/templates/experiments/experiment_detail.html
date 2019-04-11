@@ -1,107 +1,18 @@
 {% extends 'layout.html' %}
+
 {% load staticfiles %}
-{% load bootstrap4 %}
-{% load reports_extras %}
+{% load plotly_dash%}
+
+
+   
 {% block content %}
-
-<div class="masonry-item col-md-12 bgc-white p-20" style="position: relative; margin-left:auto; margin-right:auto;">
-	<div class="row mB-20">
-		<div class="col-4">			
-			<select class="qdropdown form-control" name="experiment">
-				{% for exp_item in experiment_list %}
-				<Option value="{{exp_item.id}}" {% ifequal exp_item exp_opt.id %} selected="selected" {% endifequal %}>{{ exp_item.test_name}}</Option>
-				{% endfor %}
-			</select>
-		</div>
-		<div class="col-4">{{ experiment.goal }}</div>
-		<div class="col-4">{{ experiment.created }}</div>
-	</div>
-	<div class="row mB-40">
-		<div class="col-4"><h3>{{ experiment.test_name }}</h3></div>
-		<div class="col-4">{{ experiment.additional_comments }}</div>
-		<div class="col-4">{{ experiment.modified }}</div>
-	</div>
-	<div class="row">
-		<div class="col-6">
-			<table class="table table-striped w-100">
-				<thead>
-					<tr>
-						<th scope="col">Sensor</th>
-						<th scope="col">Mean</th>
-						<th scope="col">New Mean</th>
-						<th scope="col">SD</th>
-						<th scope="col">New SD</th>
-						<th scope="col">Statistic</th>
-						<th scope="col">PValue</th>
-
-					</tr>
-				</thead>
-				<tbody>
-					{% for result_item in experiment_resultlist %}
-					<tr>
-						<td>{{ result_item.sensor_description }}</td>
-						<td>{{ result_item.mean|float2rep }}</td>
-						<td>{{ result_item.new_mean|float2rep }}</td>
-						<td>{{ result_item.new_sd|float2rep }}</td>
-						<td>{{ result_item.sd|float2rep }}</td>
-						<td>{{ result_item.statistic|float2rep }}</td>
-						<td>{{ result_item.pvalue|float2rep }}</td>
-					</tr>
-					{% endfor %}
-
-				</tbody>
-			</table>
-		</div>
-		<div class="col-6">
-			<div class="layer">
-							<select class="qdropdown form-control" name="sensor_id">
-						{% for sensoropt in experiment_resultlist %}
-						<Option value="{{sensoropt.sensor_id}}" {% ifequal sensor_id sensoropt.sensor_id %} selected="selected" {% endifequal %}>{{ sensoropt.sensor_description}}</Option>
-						{% endfor %}
-					</select>
-					<br>
-				<canvas id="mixed-chart" width="800" height="450"></canvas>
-			</div>
-		</div>
-	</div>
+<div class="row">
+	<div class="card border-dark w-100 p-20">
+  <div class="card-body w-100">
+    <div class="{%plotly_class name=3 template_type="div-direct"%}">
+      {%plotly_direct name=3 %}
+    </div>
+  </div>
+</div>
 </div>
 {% endblock %}
-
-{% block extra_js %}
-<script type="text/javascript">
-
-	{% include 'core/selectsensor_js.html' %}
-
-	new Chart(document.getElementById("mixed-chart"), {
-    type: 'bar',
-    data: {
-      labels: [{% for numerical_data in numerical_datalist %} "{{ numerical_data.value|floatformat:2 }}", {% endfor %}],
-      datasets: [{
-          label: "Africa",
-          type: "line",
-          borderColor: "#3e95cd",
-          data: [{% for numerical_data in numerical_datalist %} {{ numerical_data.value|floatformat:2 }}, {% endfor %}],
-          fill: false
-        },{
-          label: "Africa",
-          type: "bar",
-          backgroundColor: "rgba(0,0,0,0.2)",
-          backgroundColorHover: "#3e95cd",
-          data: [{% for numerical_data in numerical_datalist %} {{ numerical_data.value|floatformat:2 }}, {% endfor %}]
-        }
-      ]
-    },
-    options: {
-      title: {
-        display: false,
-       
-      },
-      legend: { display: false }
-    }
-});
-	{% include 'core/selectsensor_js.html' %}
-
-</script>
-{% endblock %}
-
-
