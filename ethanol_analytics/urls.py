@@ -26,6 +26,7 @@ urlpatterns = [
     path('django_plotly_dash/', include('django_plotly_dash.urls')),
     path('experiments/', include('experiments.urls')),
     path('data_uploads/', include('datauploads.urls')),
+    path('ethanoladmin/', include('ethanoladmin.urls')),
 ]
 
 # Add in static routes so daphne can serve files; these should

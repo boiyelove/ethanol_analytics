@@ -47,7 +47,7 @@
 						<div class="peers ai-c fxw-nw">
 							<div class="peer peer-greed">
 								<a class="sidebar-link td-n" href="{% url 'core:dashboard' %}">
-									<div class="peers ai-c fxw-nw">
+<!-- 									<div class="peers ai-c fxw-nw">
 										<div class="peer">
 											<div class="logo">
 												<img src="{% static '/images/logo.png' %}" alt="">
@@ -57,7 +57,7 @@
 											<h5 class="lh-1 mB-0 logo-text">
 											6c Solutions</h5>
 										</div>
-									</div>
+									</div> -->
 								</a>
 							</div>
 							<div class="peer">
@@ -165,7 +165,7 @@
 								</li>
 							</ul>
 						</li>
-						<li class="nav-item dropdown">
+<!-- 						<li class="nav-item dropdown">
 							<a class="dropdown-toggle" href="javascript:void(0);">
 								<span class="icon-holder">
 									<i class="c-deep-purple-500 ti-cloud-up">
@@ -195,8 +195,21 @@
 								</li>
 								{% endfor %}
 							</ul>
+						</li> -->
+						<li class="nav-item">
+							<a href="{% url 'ethanoladmin:view-admin' %}">
+								<span class="icon-holder">
+									<i class="c-deep-orange-500 ti-infinite">
+									</i>
+								</span>
+								<span class="title">
+									Admin / Staff</span>
+								<span class="arrow">
+									<i class="ti-angle-right">
+									</i>
+								</span>
+							</a>
 						</li>
-
 
 					</ul>
 				</div>
@@ -211,12 +224,12 @@
 									</i>
 								</a>
 							</li>
-							<li>
+<!-- 							<li>
 								<a href="{% url 'core:report-bug' %}" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
 											<i class="ti-unlink mR-10"><span style="margin-left:.3em;">Report Bug</span>
 											</i>
 										</a>
-							</li>
+							</li> -->
 						</ul>
 						<ul class="nav-right">
 							{% if request.user.is_authenticated %}
