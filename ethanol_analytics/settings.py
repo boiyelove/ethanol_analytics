@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django_plotly_dash.apps.DjangoPlotlyDashConfig',
     'experiments.apps.ExperimentsConfig',
     'datauploads.apps.DatauploadsConfig',
+    'ethanoladmin.apps.EthanoladminConfig',
 
 ]
 
