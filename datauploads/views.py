@@ -2,6 +2,8 @@ from django.views.generic import TemplateView
 from django.forms import formset_factory
 from django.views.generic.edit import FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from core.forms import FormLink
 from .models import  get_uploaddata
 from .forms import DataUploadForm, DataFileUploadForm
 
@@ -19,11 +21,14 @@ class DataUploadView(LoginRequiredMixin, TemplateView):
 		return super().get_context_data(**kwargs)
 
 class DataUploadForm(LoginRequiredMixin, FormView):
-	template_name = 'core/forms.html'
-	form = formset_factory(DataUploadForm, extra=4)
+	template_name = 'datauploads/data_uploadform.html'
+	form_class = formset_factory(DataUploadForm, extra=4)
 
 	def get_context_data(self, **kwargs):
-		f_t = kwargs.get('form', 'file')
+		f_t = self.request.GET.get('form', None)
 		if f_t == 'file':
 			self.form_class = DataFileUploadForm
+			self.template_name = 'core/forms.html'
+			kwargs['form_name'] = "Update Data CSV"
+			kwargs['form_exitlink'] = FormLink('go to Dataupload form', reverse_lazy('datauploads:upload-data'))
 		return super().get_context_data(**kwargs)

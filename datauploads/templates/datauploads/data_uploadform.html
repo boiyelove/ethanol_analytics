@@ -1,20 +1,51 @@
-    <div class="col-4">
-        <div class="input-group">
-            {{form.name}}
-            <div class="input-group-append">
-                <button class="btn btn-success add-form-row">+</button>
+{% extends 'layout.html' %}
+{% load staticfiles %}
+{% load bootstrap4 %}
+{% block content %}
+
+<div class="masonry-item col-md-6" style="position: relative; margin-left:auto; margin-right:auto;">
+    <div class="bd bgc-white">
+        <div class="layers">
+            <div class="layer w-100 p-20">
+                <div class="row">
+                <div class="col-9"><h5>Data UploadForm</h5></div>
+                <div class="col-3"><a href="?form=file"><h6>Upload CSV</a></h6></div>
+                </div>
             </div>
         </div>
+        <div class="ta-l bdT w-100 p-20">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.management_form }}
+
+                {% for form in form %}
+                <div class='form-row form-inline'>
+                    <div class="input-group mb-3">
+                        {% bootstrap_field form.description show_label=False %}
+                        {% bootstrap_field form.value show_label=False %}
+                        <div class="input-group-append">
+                            <button class="btn btn-danger remove-form-row" type="button">-</button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <p><button id="add" class="btn btn-primary add-form-row" type="button">Add form row +</button></p>
+                <br>
+                <button type="submit" class="btn btn-success btn-block">Submit</button>
+
+            </form>
+        </div>
+
     </div>
+</div>
+
+{% endblock %}
 
 
 
+{% block extra_js %}
+<script type="text/javascript">
 
-
-
-!-- create_normal.html :: part 4 -->
-
-<script type='text/javascript'>
 function updateElementIndex(el, prefix, ndx) {
     var id_regex = new RegExp('(' + prefix + '-\\d+)');
     var replacement = prefix + '-' + ndx;
@@ -64,4 +95,8 @@ $(document).on('click', '.remove-form-row', function(e){
     deleteForm('form', $(this));
     return false;
 });
+
 </script>
+
+
+{% endblock %}
