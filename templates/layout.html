@@ -47,17 +47,17 @@
 						<div class="peers ai-c fxw-nw">
 							<div class="peer peer-greed">
 								<a class="sidebar-link td-n" href="{% url 'core:dashboard' %}">
-									<div class="peers ai-c fxw-nw">
+<!-- 									<div class="peers ai-c fxw-nw">
 										<div class="peer">
-<!-- 											<div class="logo">
+											<div class="logo">
 												<img src="{% static '/images/logo.png' %}" alt="">
-											</div> -->
+											</div>
 										</div>
 										<div class="peer peer-greed">
 											<h5 class="lh-1 mB-0 logo-text">
 											6c Solutions</h5>
 										</div>
-									</div>
+									</div> -->
 								</a>
 							</div>
 							<div class="peer">
@@ -197,15 +197,13 @@
 							</ul>
 						</li> -->
 						<li class="nav-item">
-							<a class="dropdown-toggle" href="javascript:void(0);">
+							<a href="{% url 'ethanoladmin:view-admin' %}">
 								<span class="icon-holder">
 									<i class="c-deep-orange-500 ti-infinite">
 									</i>
 								</span>
 								<span class="title">
-								<a class="sidebar-link" href="{% url 'ethanoladmin:view-admin' %}">
-									Admin/Staff</a>
-								</span>
+									Admin / Staff</span>
 								<span class="arrow">
 									<i class="ti-angle-right">
 									</i>
