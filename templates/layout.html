@@ -196,6 +196,7 @@
 								{% endfor %}
 							</ul>
 						</li>
+					{% if request.user.is_superuser %}
 						<li class="nav-item">
 							<a href="{% url 'ethanoladmin:view-admin' %}">
 								<span class="icon-holder">
@@ -210,7 +211,7 @@
 								</span>
 							</a>
 						</li>
-
+					{% endif %}
 					</ul>
 				</div>
 			</div>
