@@ -5,11 +5,12 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import ListView, DetailView, TemplateView
 from django.contrib.auth.models import User
 from core.models import get_latest_data
+from core.views import BasicAccess
 from .forms import ExperimentForm
 from .models import Experiment, get_assets
 
 # Create your views here.
-class CreateExperiment(CreateView):
+class CreateExperiment(BasicAccess, CreateView):
 	form_class = ExperimentForm
 	success_url = reverse_lazy('experiments:list-experiments')
 	template_name = 'experiments/experiment_form.html'
@@ -20,7 +21,7 @@ class CreateExperiment(CreateView):
 		self.object.save()
 		return HttpResponseRedirect(self.success_url)
 
-class UpdateExperiment(UpdateView):
+class UpdateExperiment(BasicAccess, UpdateView):
 	form_class = ExperimentForm
 	success_url = reverse_lazy('list-experiments')
 	template_name = 'experiments/experiment_form.html'
@@ -32,11 +33,11 @@ class UpdateExperiment(UpdateView):
 		return HttpResponseRedirect(self.success_url)
 
 
-class ExperimentList(ListView):
+class ExperimentList(BasicAccess, ListView):
 	model = Experiment
 	template_name = 'experiments/experiment_list.html'
 
-class ExperimentDetail(DetailView):
+class ExperimentDetail(BasicAccess, DetailView):
 	model = Experiment
 	template_name = 'experiments/experiment_results.html'
 
@@ -55,7 +56,7 @@ class ExperimentDetail(DetailView):
 		return kwargs
 
 
-class ExperimentResultView(TemplateView):
+class ExperimentResultView(BasicAccess, TemplateView):
 	template_name = 'experiments/experiment_results.html'
 
 	def get_context_data(self, **kwargs):

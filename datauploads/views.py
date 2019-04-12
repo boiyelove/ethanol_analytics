@@ -4,11 +4,12 @@ from django.views.generic.edit import FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from core.forms import FormLink
+from core.views import BasicAccess
 from .models import  get_uploaddata
 from .forms import DataUploadForm, DataFileUploadForm
 
 # Create your views here.
-class DataUploadView(LoginRequiredMixin, TemplateView):
+class DataUploadView(BasicAccess, TemplateView):
 	template_name = "datauploads/datalist.html"
 
 
@@ -20,7 +21,7 @@ class DataUploadView(LoginRequiredMixin, TemplateView):
 			self.template_name = "datauploads/data_detail.html"
 		return super().get_context_data(**kwargs)
 
-class DataUploadForm(LoginRequiredMixin, FormView):
+class DataUploadForm(BasicAccess, FormView):
 	template_name = 'datauploads/data_uploadform.html'
 	form_class = formset_factory(DataUploadForm, extra=4)
 
