@@ -25,15 +25,17 @@ class AdminMain(LoginRequiredMixin, CanViewContentTest, TemplateView):
 			# if form_name == 'permission_request_form':
 			try:
 				useraccessrequest =UserAccessRequest.objects.get(id=int(request.POST.get('accessid')))
-				permission_status = request.POST.get('permission_status')
+				permission_status = int(request.POST.get('permission_status'))
 				print('request.post is', request.POST)
 				print('permission_status is', permission_status)
-				if permission_status == True:
+				if permission_status == 1:
 					useraccessrequest.is_allowed = True
 					useraccessrequest.save()
-				else:
+					print('setting acces request to true')
+				elif permission_status == 0:
 					useraccessrequest.is_allowed = False
 					useraccessrequest.save()
+					print('setting acces request to false')
 				return JsonResponse({
 					'accessid': useraccessrequest.id,
 					'access_request': useraccessrequest.is_allowed,
