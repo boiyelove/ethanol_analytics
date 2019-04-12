@@ -47,17 +47,17 @@
 						<div class="peers ai-c fxw-nw">
 							<div class="peer peer-greed">
 								<a class="sidebar-link td-n" href="{% url 'core:dashboard' %}">
-<!-- 									<div class="peers ai-c fxw-nw">
-										<div class="peer">
+									<div class="peers ai-c fxw-nw">
+<!-- 										<div class="peer">
 											<div class="logo">
 												<img src="{% static '/images/logo.png' %}" alt="">
 											</div>
-										</div>
+										</div> -->
 										<div class="peer peer-greed">
-											<h5 class="lh-1 mB-0 logo-text">
+											<h5 class="lh-1 mB-0 logo-text ta-c">
 											6c Solutions</h5>
 										</div>
-									</div> -->
+									</div>
 								</a>
 							</div>
 							<div class="peer">
@@ -165,7 +165,7 @@
 								</li>
 							</ul>
 						</li>
-<!-- 						<li class="nav-item dropdown">
+						<li class="nav-item dropdown">
 							<a class="dropdown-toggle" href="javascript:void(0);">
 								<span class="icon-holder">
 									<i class="c-deep-purple-500 ti-cloud-up">
@@ -183,10 +183,10 @@
 									<a class="sidebar-link" href="{% url 'datauploads:view-dataupload' %}">
 									All Methods</a>
 								</li>
-								<li>
+<!-- 								<li>
 									<a class="sidebar-link" href="{% url 'datauploads:upload-data' %}">
 									Upload CSV</a>
-								</li>
+								</li> -->
 								{% all_datamethods as uploaddata_list %}
 								{% for datauploaditem in uploaddata_list  %}
 								<li>
@@ -195,7 +195,8 @@
 								</li>
 								{% endfor %}
 							</ul>
-						</li> -->
+						</li>
+					{% if request.user.is_superuser %}
 						<li class="nav-item">
 							<a href="{% url 'ethanoladmin:view-admin' %}">
 								<span class="icon-holder">
@@ -210,7 +211,7 @@
 								</span>
 							</a>
 						</li>
-
+					{% endif %}
 					</ul>
 				</div>
 			</div>

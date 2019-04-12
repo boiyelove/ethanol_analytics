@@ -98,64 +98,6 @@
 		</div>
 	</div>
 </div>
-<div class="row gap-20 masonry pos-r">
-	{% if request.user.is_superuser %}
-	<div class="masonry-item col-md-6">
-		<div class="bd bgc-white p-20">
-			<div class="layers">
-				<div class="layer w-100 mB-10">
-					<h6 class="lh-1">
-					Permission Request</h6>
-				</div>
-				<div class="layer w-100">
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th scope="col">#</th>
-								<th scope="col">Username</th>
-								<th scope="col">Status</th>
-								<th scope="col">Action</th>
-							</tr>
-						</thead>
-						<tbody>
-							{% for preq in permission_requests %}
-							<tr>
-								<th scope="row">1</th>
-								<td>{{ preq.user }}</td>
-								<td>{% if preq.is_allowed %}			<span class="peer" style="margin-left:auto;margin-right:auto;">
-									<span class="badge badge-pill badge-success lh-0 p-10">
-									Allowed</span>
-								</span>
-
-								{% else %}					<span class="peer" style="margin-left:auto;margin-right:auto;">
-									<span class="badge badge-pill badge-danger lh-0 p-10">
-									Denied</span>
-								</span>
-							{% endif %}</td>
-							<td>
-								<form class="ajax-form" action="." method="post">
-									{% csrf_token %}
-									{% if preq.is_allowed %}<button class="btn btn-danger btn-sm" name="permission_status" value="False">Revoke</button>
-								</span>
-
-								{% else %}
-								<button class="btn btn-success btn-sm" name="permission_status" value="True">Allow</button>
-								{% endif %}
-								
-								
-							</form>
-						</td>
-					</tr>
-					{% endfor %}
-					
-				</tbody>
-			</table>
-		</div>
-	</div>
-</div>
-</div>
-{% endif %}
-
 
 <div class="masonry-item col-md-12">
 	<div class="bd bgc-white">
