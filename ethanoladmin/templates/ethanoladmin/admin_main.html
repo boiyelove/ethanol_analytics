@@ -47,12 +47,12 @@
 									<input type="hidden" name="accessid" value="{{preq.id}}">
 
 									{% if preq.is_allowed %}
-									<input type="hidden" name="permission_status" value="0">
+									<input id="permission_status-{{preq.id}}" type="hidden" name="permission_status" value="0">
 									<button id="access-btn-{{preq.id}}" type="submit" class="btn btn-danger btn-sm">Revoke</button>
 								
 
 								{% else %}
-								<input type="hidden" name="permission_status" value="1">
+								<input id="permission_status-{{preq.id}}" type="hidden" name="permission_status" value="1">
 								<button class="btn btn-success btn-sm" id="access-btn-{{preq.id}}" type="submit" value="True">Allow</button>
 								{% endif %}
 								
@@ -81,14 +81,7 @@
 <script type="text/javascript">
 	$('.ajax-form').on('submit', function(e){
 		e.preventDefault();
-		//disable
-		//add processing
-		// console.log(e);
-		// console.log(e.currentTarget);
-		// console.log($(this));
-		// button = $(e.target).find("button[name=persmission_status]");
 		accessid = $(e.currentTarget).find("input[name=accessid]").val();
-		$('#access-btn-' + accessid).disabled = true;
 		$('#access-btn-' + accessid).html('<span class="spinner-border spinner-border-sm"></span> processing... ');
 		$('#access-btn-' + accessid).removeClass('btn-danger');
 		$('#access-btn-' + accessid).removeClass('btn-success');
@@ -99,31 +92,37 @@
 			data: $(this).serialize(),
 
 		}).done(function(data){
-			console.log(data);
-			// data = JSON.parse(data);
 			if (data.access_request == true){
+
+				$('#access-status-' + accessid).removeClass('badge-danger');
+				$('#access-status-' + accessid).addClass('badge-success');
+				$('#access-status-' + accessid).html('allowed');
+				
+				$('#permission_status-' + accessid).val(0);
+
 				$('#access-btn-' + accessid).removeClass('btn-secondary');
 				$('#access-btn-' + accessid).addClass('btn-danger');
 				$('#access-btn-' + accessid).html('Revoke');
-				$('#access-btn-' + accessid).val(0);
-				$('#access-status-' + accessid).removeClass('badge-danger');
-				$('#access-status-' + accessid).addClass('badge-success');
 				
+
+
+
 				} else if (data.access_request == false) {
+				$('#access-status-' + accessid).removeClass('badge-success');
+				$('#access-status-' + accessid).addClass('badge-danger');
+				$('#access-status-' + accessid).html('denied');
+				
+				$('#permission_status-' + accessid).val(1);
+				
 				$('#access-btn-' + accessid).removeClass('btn-secondary');
 				$('#access-btn-' + accessid).addClass('btn-success');
 				$('#access-btn-' + accessid).html('Allow')
-				$('#access-btn-' + accessid).val(1);
-				$('#access-status-' + accessid).removeClass('badge-success');
-				$('#access-status-' + accessid).addClass('badge-danger');
-				
+
+
 				}
 			}).fail(function(data){
 			alert("An error occured");	
 			console.log(data);
-
-			// $('#access-btn-' + accessid).html('<span class="spinner-border spinner-border-sm"></span> processing... ');
-
 		});
 	});
 
@@ -131,11 +130,3 @@
 
 </script>
 {% endblock %}
-
-				if (data.access_request == true){
-			accessid = $(e.currentTarget).find("input[name=accessid]").val();
-			$('#access-btn-' + accessid).html('<span class="spinner-border spinner-border-sm"></span> processing... ');
-				// get status, change it
-				// get button, change it
-			$('#access-btn-' + accessid).removeClass('btn-danger');
-			$('#access-btn-' + accessid).removeClass('btn-success');

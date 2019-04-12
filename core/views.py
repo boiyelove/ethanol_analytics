@@ -11,21 +11,22 @@ from easy_pdf.views import PDFTemplateView
 
 
 # Create your views here.
-
 class CanViewContentTest:
 	def dispatch(self, request, *args, **kwargs):
-		if request.user.is_superuser:
-			return super().dispatch(request, *args, **kwargs)
-		else:
-			try:
+		try:
+			if request.user.is_superuser: pass
+			else:
 				useraccessrequest = UserAccessRequest.objects.get(user =  request.user)
-				if useraccessrequest.is_allowed:
-					return super().dispatch(request, *args, **kwargs)
-			except:
-				return HttpResponseRedirect(reverse_lazy('core:permission-error'))
+				if not useraccessrequest.is_allowed:
+					raise Exception()
+			return super().dispatch(request, *args, **kwargs)
+		except:
+			return HttpResponseRedirect(reverse_lazy('core:permission-error'))
 
+class BasicAccess(LoginRequiredMixin, CanViewContentTest):
+	pass
 
-class DashboardView(LoginRequiredMixin, CanViewContentTest, TemplateView):
+class DashboardView(BasicAccess, TemplateView):
 	template_name = 'core/dashboard.html'
 
 	def get_context_data(self, **kwargs):
@@ -107,7 +108,7 @@ class PermissionRequiredView(LoginRequiredMixin, TemplateView):
 		context['access_granted'] = True
 		return self.render_to_response(context)
 
-class ReportBugFV(LoginRequiredMixin, FormView):
+class ReportBugFV(BasicAccess, FormView):
 	template_name = 'core/forms.html'
 	form_class = BugReportForm
 	success_url = reverse_lazy('core:dashboard')
@@ -117,7 +118,7 @@ class ReportBugFV(LoginRequiredMixin, FormView):
 		return super().form_valid(form)
 
 
-class DownloadPDF(LoginRequiredMixin, PDFTemplateView):
+class DownloadPDF(BasicAccess, PDFTemplateView):
 	template_name = "core/pdf_template.html"
 
 	def get_context_data(self, **kwargs):

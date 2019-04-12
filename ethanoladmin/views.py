@@ -1,15 +1,16 @@
 from django.shortcuts import render
 from django.http import Http404, JsonResponse
 from django.views.generic import TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
 from core.models import UserAccessRequest
-from core.views import CanViewContentTest
+from core.views import BasicAccess
 
 # Create your views here.
-
-
-class AdminMain(LoginRequiredMixin, CanViewContentTest, TemplateView):
+class AdminMain(BasicAccess, UserPassesTestMixin, TemplateView):
 	template_name = 'ethanoladmin/admin_main.html'
+
+	def test_func(self):
+		return self.request.user.is_superuser
 
 
 	def get_context_data(self, **kwargs):
@@ -21,17 +22,14 @@ class AdminMain(LoginRequiredMixin, CanViewContentTest, TemplateView):
 
 	def post(self, request, *args, **kwargs):
 		if request.is_ajax():
-			# form_name = request.POST.get('form-name')
-			# if form_name == 'permission_request_form':
+
 			try:
 				useraccessrequest =UserAccessRequest.objects.get(id=int(request.POST.get('accessid')))
-				permission_status = request.POST.get('permission_status')
-				print('request.post is', request.POST)
-				print('permission_status is', permission_status)
-				if permission_status == True:
+				permission_status = int(request.POST.get('permission_status'))
+				if permission_status == 1:
 					useraccessrequest.is_allowed = True
 					useraccessrequest.save()
-				else:
+				elif permission_status == 0:
 					useraccessrequest.is_allowed = False
 					useraccessrequest.save()
 				return JsonResponse({
