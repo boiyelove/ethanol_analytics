@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from django.contrib.auth.models import User
 from core.models import get_latest_data
 from .forms import ExperimentForm
@@ -38,7 +38,25 @@ class ExperimentList(ListView):
 
 class ExperimentDetail(DetailView):
 	model = Experiment
-	template_name = 'experiments/experiment_detail.html'
+	template_name = 'experiments/experiment_results.html'
+
+	def get_context_data(self, **kwargs):
+		kwargs = super().get_context_data(**kwargs)
+		sensor_id = self.request.GET.get("sensor_id", None)
+		current_result = Experiment.get_experiment_result()
+
+		kwargs['use_plotlydash'] = True
+
+		kwargs['sensor_id'] = sensor_id
+		# kwargs['experiment_list'] = Experiment.objects.all()
+		# kwargs['sensor_data'] = get_latest_data()
+		# kwargs['experiment_resultlist'] =  Experiment.get_experiment_result()
+		# kwargs['numerical_datalist'] =  Experiment.get_numerical_data(sensor_id=sensor_id)
+		return kwargs
+
+
+class ExperimentResultView(TemplateView):
+	template_name = 'experiments/experiment_results.html'
 
 	def get_context_data(self, **kwargs):
 		kwargs = super().get_context_data(**kwargs)
