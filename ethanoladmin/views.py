@@ -26,6 +26,8 @@ class AdminMain(LoginRequiredMixin, CanViewContentTest, TemplateView):
 			try:
 				useraccessrequest =UserAccessRequest.objects.get(id=int(request.POST.get('accessid')))
 				permission_status = request.POST.get('permission_status')
+				print('request.post is', request.POST)
+				print('permission_status is', permission_status)
 				if permission_status == True:
 					useraccessrequest.is_allowed = True
 					useraccessrequest.save()

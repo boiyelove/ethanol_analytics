@@ -45,11 +45,15 @@
 									{% csrf_token %}
 									<input type="hidden" form-name="permission_request_form">
 									<input type="hidden" name="accessid" value="{{preq.id}}">
-									{% if preq.is_allowed %}<button id="access-btn-{{preq.id}}" class="btn btn-danger btn-sm" name="permission_status" value="0">Revoke</button>
-								</span>
+
+									{% if preq.is_allowed %}
+									<input type="hidden" name="permission_status" value="0">
+									<button id="access-btn-{{preq.id}}" type="submit" class="btn btn-danger btn-sm">Revoke</button>
+								
 
 								{% else %}
-								<button class="btn btn-success btn-sm" id="access-btn-{{preq.id}}" name="permission_status" value="1">Allow</button>
+								<input type="hidden" name="permission_status" value="1">
+								<button class="btn btn-success btn-sm" id="access-btn-{{preq.id}}" type="submit" value="True">Allow</button>
 								{% endif %}
 								
 								
@@ -100,13 +104,19 @@
 			if (data.access_request == true){
 				$('#access-btn-' + accessid).removeClass('btn-secondary');
 				$('#access-btn-' + accessid).addClass('btn-danger');
-				$('#access-btn-' + accessid).html('Revoke')
+				$('#access-btn-' + accessid).html('Revoke');
 				$('#access-btn-' + accessid).val(0);
-				} else {
+				$('#access-status-' + accessid).removeClass('badge-danger');
+				$('#access-status-' + accessid).addClass('badge-success');
+				
+				} else if (data.access_request == false) {
 				$('#access-btn-' + accessid).removeClass('btn-secondary');
 				$('#access-btn-' + accessid).addClass('btn-success');
 				$('#access-btn-' + accessid).html('Allow')
 				$('#access-btn-' + accessid).val(1);
+				$('#access-status-' + accessid).removeClass('badge-success');
+				$('#access-status-' + accessid).addClass('badge-danger');
+				
 				}
 			}).fail(function(data){
 			alert("An error occured");	
