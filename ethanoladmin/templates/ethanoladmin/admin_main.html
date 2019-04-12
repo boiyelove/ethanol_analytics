@@ -1,6 +1,131 @@
 {% extends 'layout.html' %}
 {% load staticfiles %}
 {% block content %}
+<div class="row gap-20 masonry pos-r">
+	<div class="masonry-sizer col-md-6">
+		<br>
+	</div>
+</div>
+<div class="row gap-20 mT-20 masonry pos-r">
+	{% if request.user.is_superuser %}
+	<div class="masonry-item col-md-6">
+		<div class="bd bgc-white p-20">
+			<div class="layers">
+				<div class="layer w-100 mB-10">
+					<h6 class="lh-1">
+					Permission Request</h6>
+				</div>
+				<div class="layer w-100">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">Username</th>
+								<th scope="col">Status</th>
+								<th scope="col">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for preq in permission_requests %}
+							<tr>
+								<th scope="row">1</th>
+								<td>{{ preq.user }}</td>
+								<td>{% if preq.is_allowed %}			<span class="peer" style="margin-left:auto;margin-right:auto;">
+									<span id="access-status-{{preq.id}}" class="badge badge-pill badge-success lh-0 p-10">
+									Allowed</span>
+								</span>
+
+								{% else %}	<span class="peer" style="margin-left:auto;margin-right:auto;">
+									<span id="access-status-{{preq.id}}" class="badge badge-pill badge-danger lh-0 p-10">
+									Denied</span>
+								</span>
+							{% endif %}</td>
+							<td>
+								<form class="ajax-form" action="." method="post" >
+									{% csrf_token %}
+									<input type="hidden" form-name="permission_request_form">
+									<input type="hidden" name="accessid" value="{{preq.id}}">
+									{% if preq.is_allowed %}<button id="access-btn-{{preq.id}}" class="btn btn-danger btn-sm" name="permission_status" value="0">Revoke</button>
+								</span>
+
+								{% else %}
+								<button class="btn btn-success btn-sm" id="access-btn-{{preq.id}}" name="permission_status" value="1">Allow</button>
+								{% endif %}
+								
+								
+							</form>
+						</td>
+					</tr>
+					{% endfor %}
+					
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+</div>
+{% endif %}
+</div>
+
 
 
 {% endblock %}
+
+
+
+{% block extra_js %}
+<script type="text/javascript">
+	$('.ajax-form').on('submit', function(e){
+		e.preventDefault();
+		//disable
+		//add processing
+		// console.log(e);
+		// console.log(e.currentTarget);
+		// console.log($(this));
+		// button = $(e.target).find("button[name=persmission_status]");
+		accessid = $(e.currentTarget).find("input[name=accessid]").val();
+		$('#access-btn-' + accessid).disabled = true;
+		$('#access-btn-' + accessid).html('<span class="spinner-border spinner-border-sm"></span> processing... ');
+		$('#access-btn-' + accessid).removeClass('btn-danger');
+		$('#access-btn-' + accessid).removeClass('btn-success');
+		$('#access-btn-' + accessid).addClass('btn-secondary');
+		$.ajax({
+			method: $(this).attr('method'),
+			url: $(this).attr('action'),
+			data: $(this).serialize(),
+
+		}).done(function(data){
+			console.log(data);
+			// data = JSON.parse(data);
+			if (data.access_request == true){
+				$('#access-btn-' + accessid).removeClass('btn-secondary');
+				$('#access-btn-' + accessid).addClass('btn-danger');
+				$('#access-btn-' + accessid).html('Revoke')
+				$('#access-btn-' + accessid).val(0);
+				} else {
+				$('#access-btn-' + accessid).removeClass('btn-secondary');
+				$('#access-btn-' + accessid).addClass('btn-success');
+				$('#access-btn-' + accessid).html('Allow')
+				$('#access-btn-' + accessid).val(1);
+				}
+			}).fail(function(data){
+			alert("An error occured");	
+			console.log(data);
+
+			// $('#access-btn-' + accessid).html('<span class="spinner-border spinner-border-sm"></span> processing... ');
+
+		});
+	});
+
+
+
+</script>
+{% endblock %}
+
+				if (data.access_request == true){
+			accessid = $(e.currentTarget).find("input[name=accessid]").val();
+			$('#access-btn-' + accessid).html('<span class="spinner-border spinner-border-sm"></span> processing... ');
+				// get status, change it
+				// get button, change it
+			$('#access-btn-' + accessid).removeClass('btn-danger');
+			$('#access-btn-' + accessid).removeClass('btn-success');
