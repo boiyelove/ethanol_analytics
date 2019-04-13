@@ -47,12 +47,7 @@ class ExperimentDetail(BasicAccess, DetailView):
 		current_result = Experiment.get_experiment_result()
 
 		kwargs['use_plotlydash'] = True
-
 		kwargs['sensor_id'] = sensor_id
-		# kwargs['experiment_list'] = Experiment.objects.all()
-		# kwargs['sensor_data'] = get_latest_data()
-		# kwargs['experiment_resultlist'] =  Experiment.get_experiment_result()
-		# kwargs['numerical_datalist'] =  Experiment.get_numerical_data(sensor_id=sensor_id)
 		return kwargs
 
 
@@ -67,10 +62,6 @@ class ExperimentResultView(BasicAccess, TemplateView):
 		kwargs['use_plotlydash'] = True
 
 		kwargs['sensor_id'] = sensor_id
-		# kwargs['experiment_list'] = Experiment.objects.all()
-		# kwargs['sensor_data'] = get_latest_data()
-		# kwargs['experiment_resultlist'] =  Experiment.get_experiment_result()
-		# kwargs['numerical_datalist'] =  Experiment.get_numerical_data(sensor_id=sensor_id)
 		return kwargs
 
 
