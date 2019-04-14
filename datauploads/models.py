@@ -8,13 +8,13 @@ def get_uploaddata(id=None):
 	
 	with connections['sensors'].cursor() as cursor:
 		if id:
-			cursor.execute("Select * from dash_app_metadata where (category = 'data_capture') AND (id = {0})".format(id))
+			cursor.execute("Select * from whse.dim_dash_app_metadata where (category = 'data_capture') AND (id = {0})".format(id))
 			result =  cursor.fetchone()
 			columns = [x.name for x in cursor.description]
 			result = dict(zip(columns, result))
 			return result
 		else:
-			cursor.execute("Select * from dash_app_metadata where category = 'data_capture' order by id")
+			cursor.execute("Select * from whse.dim_dash_app_metadata where category = 'data_capture' order by id")
 			return dictfetchall(cursor)
 
 class DataFileUpload(TimeStampedModel):

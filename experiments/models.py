@@ -16,7 +16,7 @@ class Asset(TimeStampedModel):
 
 def get_assets():
 	with connections['sensors'].cursor() as cursor:
-		cursor.execute("Select asset_category from sensor_metadata where asset_category != '' group by 1 order by 1;")
+		cursor.execute("Select asset_category from whse.dim_sensor_metadata where asset_category != '' group by 1 order by 1;")
 		return dictfetchall(cursor)
 
 ASSET_CHOICES = tuple([(x['asset_category'],x['asset_category']) for x in get_assets()])
@@ -57,9 +57,9 @@ class Experiment(TimeStampedModel):
 	def get_numerical_data(sensor_id=None):
 		with connections['sensors'].cursor() as cursor:
 			if sensor_id:
-				cursor.execute("Select sensor_id, sensor_description, value, time, (case when time > change_date then 'after' when time <= change_date then 'before' end)as group from ( Select b.sensor_id, sensor_description, change_date, lookback_window, analysis_window,a.asset_category,d.value,d.time from (Select id, change_date, lookback_window, analysis_window, unnest(assets) as asset_category from experimentation.metadata ) a inner join sensor_metadata b on a.asset_category = b.asset_category and sensor_id = '{}' inner join hour_agg d on b.sensor_id = d.sensor_id and d.time between change_date:: date - lookback_window and change_date:: date + analysis_window) k;".format(sensor_id))
+				cursor.execute("Select sensor_id, sensor_description, value, time, (case when time > change_date then 'after' when time <= change_date then 'before' end)as group from ( Select b.sensor_id, sensor_description, change_date, lookback_window, analysis_window,a.asset_category,d.value,d.time from (Select id, change_date, lookback_window, analysis_window, unnest(assets) as asset_category from whse.dim_experimentation_metadata ) a inner join whse.dim_sensor_metadata b on a.asset_category = b.asset_category and sensor_id = '{}' inner join  whse.agg_hour_sensor_values d on b.sensor_id = d.sensor_id and d.time between change_date:: date - lookback_window and change_date:: date + analysis_window) k;".format(sensor_id))
 			else:
-				cursor.execute("Select sensor_id, sensor_description, value, time, (case when time > change_date then 'after' when time <= change_date then 'before' end)as group from ( Select b.sensor_id, sensor_description, change_date, lookback_window, analysis_window,a.asset_category,d.value,d.time from (Select id, change_date, lookback_window, analysis_window, unnest(assets) as asset_category from experimentation.metadata ) a inner join sensor_metadata b on a.asset_category = b.asset_category and sensor_id = 'PORT_CIP.AB_A.F44:41' inner join hour_agg d on b.sensor_id = d.sensor_id and d.time between change_date:: date - lookback_window and change_date:: date + analysis_window) k;")
+				cursor.execute("Select sensor_id, sensor_description, value, time, (case when time > change_date then 'after' when time <= change_date then 'before' end)as group from ( Select b.sensor_id, sensor_description, change_date, lookback_window, analysis_window,a.asset_category,d.value,d.time from (Select id, change_date, lookback_window, analysis_window, unnest(assets) as asset_category from whse.dim_experimentation_metadata ) a inner join whse.dim_sensor_metadata b on a.asset_category = b.asset_category and sensor_id = 'PORT_CIP.AB_A.F44:41' inner join  whse.agg_hour_sensor_values d on b.sensor_id = d.sensor_id and d.time between change_date:: date - lookback_window and change_date:: date + analysis_window) k;")
 				
 			return dictfetchall(cursor)
 

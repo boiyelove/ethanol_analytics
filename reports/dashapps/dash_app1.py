@@ -256,7 +256,7 @@ def graph_data(value,df):
 def graph_data(test,lab_period,df):
     datasets = json.loads(df)
     sensor_id = lab_period + '.' + test
-    SQL = """Select * from raw_lab_data where sensor_id = '{}' and datetime > current_Date - 180 and value::numeric != 0""".format(sensor_id)
+    SQL = """Select * from whse.raw_lab_data where sensor_id = '{}' and datetime > current_Date - 180 and value::numeric != 0""".format(sensor_id)
     engine = db_sql.engine
     df = pd.read_sql(SQL,engine)
 
@@ -289,7 +289,7 @@ def graph_data(test,lab_period,df):
 )
 def graph_data(test,lab_period,df):
     sensor_id = lab_period + '.' + test
-    SQL = """Select batch_id, datetime, value from raw_lab_data where sensor_id = '{}' and datetime > current_Date - 180""".format(sensor_id)
+    SQL = """Select batch_id, datetime, value from whse.raw_lab_data where sensor_id = '{}' and datetime > current_Date - 180""".format(sensor_id)
     engine = db_sql.engine
     df = pd.read_sql(SQL,engine)
     df = df.sort_values('datetime').reset_index(drop=True)
