@@ -41,7 +41,7 @@ class DashboardView(BasicAccess, TemplateView):
 			picked = [x for x in sensor_data if x.get('sensor_id') == sensor_id]
 			filtered = [x for x in sensor_data if x.get('sensor_id') != sensor_id]
 			sensor_data = picked + filtered	
-		#dec2 = lambda dec2:"%.2f" % float(x)  
+
 		def get_datarep(x, perc=False):
 			if x is None:
 				return '-'
@@ -132,7 +132,6 @@ class DownloadPDF(BasicAccess, PDFTemplateView):
 		else:
 			sensor_data = get_sensor_data()
 		sensor_list = [dict(tupled) for tupled in set(tuple(sensor.items()) for sensor in sensor_list)]
-		# self.pdf_filename = 'sensor_data.pdf'
 		context['sensor_id'] = sensor_id
 		context['entries'] = entries
 		context['sensor_list'] = sensor_list

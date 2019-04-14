@@ -6,7 +6,6 @@ from .models import  get_report_data
 # Create your views here.
 class ReportView(BasicAccess, TemplateView):
 	template_name = "reports/reports.html"
-	# extra_context = {"reportlist": get_report_data, "page_title": "Reports"}
 
 	def get_context_data(self, **kwargs):
 		id = kwargs.get('id', None)
