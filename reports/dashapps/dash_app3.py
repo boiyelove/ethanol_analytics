@@ -18,7 +18,7 @@ def get_experiment_results(ex_id):
     df_dict = {}
     engine = db_sql.engine
     if ex_id == 0:
-        SQL = """ Select id, name, (change_date :: date) :: varchar, assets, goal, status, create_user from experimentation.metadata 
+        SQL = """ Select experiment_id, experiment_name, (change_date :: date) :: varchar, assets, goal, status, create_user from whse.dim_experimentation_metadata 
             """.format(ex_id)
         df = pd.read_sql(SQL,engine)
         df_dict['metadata'] = df.to_json(orient='split', date_format='iso')
@@ -29,7 +29,7 @@ def get_experiment_results(ex_id):
         df = pd.read_sql(SQL,engine)
         df_dict['current_results'] = df.to_json(orient='split', date_format='iso')
         df_dict['sensor_list'] = df[['sensor_id','sensor_description']].to_json(orient='split', date_format='iso')
-        SQL = """ Select id, name, change_date, assets, goal, status, create_user from experimentation.metadata 
+        SQL = """ Select id, name, change_date, assets, goal, status, create_user from whse.dim_experimentation_metadata 
             where id =  {};""".format(ex_id)
         df = pd.read_sql(SQL,engine)
         df_dict['metadata'] = df.to_json(orient='split', date_format='iso')
@@ -37,8 +37,8 @@ def get_experiment_results(ex_id):
 
 
 def get_experiment_metadata():
-    SQL = """Select id as value, name as label from experimentation.metadata
-            order by id desc
+    SQL = """Select experiment_id as value, experiment_name as label from whse.dim_experimentation_metadata
+            order by experiment_id desc
             ;"""
     engine = db_sql.engine
     df = pd.read_sql(SQL,engine)
@@ -233,13 +233,13 @@ def hide_data(sensor_id,experiment_id):
         SQL = """Select value, time, (case when time > change_date then   'after'
                                                                 when time <= change_date then 'before'
                                                                 end)as group from 
-            ( Select id, b.sensor_id, sensor_description, change_date, lookback_window, analysis_window,a.asset_category,d.value,d.time from 
-            (Select id, change_date, lookback_window, analysis_window, unnest(assets) as asset_category from experimentation.metadata 
+            ( Select experiment_id, b.sensor_id, sensor_description, change_date, lookback_window, analysis_window,a.asset_category,d.value,d.time from 
+            (Select experiment_id, change_date, lookback_window, analysis_window, unnest(assets) as asset_category from whse.dim_experimentation_metadata 
                 where id = {} 
             ) a
             inner join sensor_metadata b
             on a.asset_category = b.asset_category and sensor_id = '{}' 
-            inner join hour_agg d
+            inner join  whse.agg_hour_sensor_values d
             on b.sensor_id = d.sensor_id and d.time between change_date:: date - lookback_window and change_date:: date + analysis_window 
             ) k
             order by time""" .format(experiment_id, sensor_id)
