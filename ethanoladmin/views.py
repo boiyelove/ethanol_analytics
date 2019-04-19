@@ -4,6 +4,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth.mixins import UserPassesTestMixin
 from core.models import UserAccessRequest
 from core.views import BasicAccess
+from .models import get_allsensors
 
 # Create your views here.
 class AdminMain(BasicAccess, UserPassesTestMixin, TemplateView):
@@ -16,6 +17,7 @@ class AdminMain(BasicAccess, UserPassesTestMixin, TemplateView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['permission_requests'] = UserAccessRequest.objects.all()
+		context['all_sensor_list'] = get_allsensors()
 		return context
 
 
@@ -38,6 +40,15 @@ class AdminMain(BasicAccess, UserPassesTestMixin, TemplateView):
 					})
 			except e:
 				print(e)
+
+			# selected_sensors = request.POST.get('selected_sensors')
+			# get selected sensors
+			# if exists
+			# delect all
+			# get or create sensor
+			#set to active
+			#done
+
 				
 		raise Http404
 
