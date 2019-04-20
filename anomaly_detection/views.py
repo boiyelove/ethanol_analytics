@@ -1,4 +1,6 @@
+from django.urls import reverse_lazy
 from django.views.generic import TemplateView
+from django.views.generic.edit import CreateView
 from core.views import BasicAccess
 from .models import  AnomalyData
 
@@ -13,3 +15,8 @@ class AnomalyDetectionView(BasicAccess, TemplateView):
 			kwargs['use_plotlydash'] = True
 			self.template_name = "anomaly_detection/anomaly_detection_detail.html"
 		return super().get_context_data(**kwargs)
+
+class AnomalyCreateView(BasicAccess, CreateView):
+	model = AnomalyData
+	fields = ('sensor_id', 'anomaly_start', 'anomaly_end', 'asset_category',)
+	success_url = reverse_lazy('anomaly_detection:anomaly-view')
