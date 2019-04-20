@@ -27,6 +27,7 @@ urlpatterns = [
     path('experiments/', include('experiments.urls')),
     path('data_uploads/', include('datauploads.urls')),
     path('ethanoladmin/', include('ethanoladmin.urls')),
+    path('anomaly_detection/', include('anomaly_detection.urls')),
 ]
 
 # Add in static routes so daphne can serve files; these should
