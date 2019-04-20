@@ -46,7 +46,7 @@
 							<td>
 								<form class="ajax-form" action="." method="post" >
 									{% csrf_token %}
-									<input type="hidden" form-name="permission_request_form">
+									<input type="hidden" name="form-name" value="permission_request_form">
 									<input type="hidden" name="accessid" value="{{preq.id}}">
 
 									{% if preq.is_allowed %}
