@@ -8,4 +8,5 @@ app_name ='anomaly_detection'
 urlpatterns =  [
 	path('', views.AnomalyDetectionView.as_view(), name='view-anomaly'),
 	path('<int:id>/', views.AnomalyDetectionView.as_view(), name='view-anomaly_detail'),
+	path('add/', view.AnomalyDataCreateView.as_view(), name='add-anomalydata'),
 ]

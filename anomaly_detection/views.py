@@ -16,7 +16,7 @@ class AnomalyDetectionView(BasicAccess, TemplateView):
 			self.template_name = "anomaly_detection/anomaly_detection_detail.html"
 		return super().get_context_data(**kwargs)
 
-class AnomalyCreateView(BasicAccess, CreateView):
+class AnomalyDataCreateView(BasicAccess, CreateView):
 	model = AnomalyData
 	fields = ('sensor_id', 'anomaly_start', 'anomaly_end', 'asset_category',)
 	success_url = reverse_lazy('anomaly_detection:anomaly-view')
