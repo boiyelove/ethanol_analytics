@@ -184,6 +184,17 @@
 
 		e.preventDefault();
 		$('.sensorbtn').prop('disabled', true);
+
+
+		select_status = parseInt($(e.currentTarget).find('input[name=select_status]').val());
+		if (select_status == 1){
+					count = parseInt($('#sensor_count').text());
+					if (count >= 8){
+						alert('Maximum amount of sensors exceeded, remove one or more sensor to be allowed to add another');
+						$('.sensorbtn').prop('disabled', false);
+						return false;
+					}
+				}
 		$.ajax({
 			method: $(this).attr('method'),
 			url: $(this).attr('action'),
