@@ -23,7 +23,7 @@ ASSET_CHOICES = tuple([(x['asset_category'],x['asset_category']) for x in get_as
 
 class Experiment(TimeStampedModel):
 	test_name = models.CharField(max_length=120)
-	change_date = models.DateField()
+	change_date = models.DateTimeField()
 	lookback_window = models.PositiveIntegerField()
 	analysis_window = models.PositiveIntegerField()
 	goal = models.CharField(max_length=120)
