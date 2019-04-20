@@ -156,7 +156,7 @@ SITE_ID = 1
 
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_LOGOUT_ON_GET = True
-ACCOUNT_SIGNUP_PASSWORD_VERIFICATION = False
+# ACCOUNT_SIGNUP_PASSWORD_VERIFICATION = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
