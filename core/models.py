@@ -24,9 +24,7 @@ class Sensor(TimeStampedModel):
 
 def get_active_sensors():
 	sensor_id = Sensor.objects.filter(show_on_dashboard=True).values_list('sensor_id', flat=True)
-	sensor_id =   "'" +  "','".join(sensor_id)  + "'"
-	print(sensor_id)
-	return sensor_id
+	return  "'" +  "','".join(sensor_id)  + "'"
 
 
 def get_sensor_data(n=31, sensor_id=None):

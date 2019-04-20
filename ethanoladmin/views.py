@@ -27,12 +27,10 @@ class AdminMain(BasicAccess, UserPassesTestMixin, TemplateView):
 	def post(self, request, *args, **kwargs):
 
 		if request.is_ajax():
-			print('post data is', request.POST)
 
 			# form name = permission request
 			form_name = request.POST.get('form-name', None)
 			if form_name == "permission_request_form":
-				print('in pemission block')
 				try:
 					useraccessrequest =UserAccessRequest.objects.get(id=int(request.POST.get('accessid')))
 					permission_status = int(request.POST.get('permission_status'))
@@ -42,7 +40,6 @@ class AdminMain(BasicAccess, UserPassesTestMixin, TemplateView):
 					elif permission_status == 0:
 						useraccessrequest.is_allowed = False
 						useraccessrequest.save()
-					print('in pemission block')
 					return JsonResponse({
 						'accessid': useraccessrequest.id,
 						'access_request': useraccessrequest.is_allowed,
@@ -53,7 +50,6 @@ class AdminMain(BasicAccess, UserPassesTestMixin, TemplateView):
 
 			# form name  = sensor form
 			if form_name == "sensorform":
-				print('in sensor block')
 				try:
 					select_status = int(request.POST.get('select_status'))
 					sensor_id = request.POST.get('sensor_id')
@@ -65,21 +61,12 @@ class AdminMain(BasicAccess, UserPassesTestMixin, TemplateView):
 					elif select_status == 0:
 						obj.show_on_dashboard = False
 						obj.save()
-					print('in sensor block')
 					return JsonResponse({
 						'sensor_id': obj.sensor_id,
 						'show_on_dashboard': obj.show_on_dashboard,
 						})
 				except Exception as e:
 					print(e)
-					# throw error
-			# get selected sensors
-			# if exists
-			# delect all
-			# get or create sensor
-			#set to active
-			#done
-
 				
 		raise Http404
 
