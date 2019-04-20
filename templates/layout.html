@@ -231,6 +231,13 @@
 											</i>
 										</a>
 							</li> -->
+						{% if selected_sensor_count %}
+						<li>
+								<a href="javascript:void(0);" style="padding-top: 5px;">
+									
+									<span id="sensor_count" class="badge-secondary p-10">{{selected_sensor_count}}</span> Sensors Selected	</a>
+							</li>
+						{% endif %}
 						</ul>
 						<ul class="nav-right">
 							{% if request.user.is_authenticated %}

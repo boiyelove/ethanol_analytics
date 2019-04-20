@@ -252,6 +252,11 @@
 				$('#sbtn-' + sid).removeClass('btn-success');
 				$('#sbtn-' + sid).addClass('btn-danger');
 				$('#sbtn-' + sid).html('Remove From Dashboard');
+
+				count = parseInt($('#sensor_count').text());
+				count += 1;
+				$('#sensor_count').text(count);
+
 				console.log('in true');
 				//sensorbtn
 
@@ -260,6 +265,10 @@
 				$('#sbtn-' + sid).removeClass('btn-danger');
 				$('#sbtn-' + sid).addClass('btn-success');
 				$('#sbtn-' + sid).html('Add To Dashboard');
+
+				count = parseInt($('#sensor_count').text());
+				count -= 1;
+				$('#sensor_count').text(count);
 				console.log('in false');
 			}
 

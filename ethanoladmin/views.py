@@ -19,6 +19,7 @@ class AdminMain(BasicAccess, UserPassesTestMixin, TemplateView):
 		context['permission_requests'] = UserAccessRequest.objects.	all()
 		context['all_sensor_list'] = get_allsensors()
 		context['selected_sensors'] = Sensor.objects.filter(show_on_dashboard = True).values_list('sensor_id', flat=True)
+		context['selected_sensor_count'] = len(context['selected_sensors'])
 		return context
 
 
