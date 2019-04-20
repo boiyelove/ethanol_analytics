@@ -49,19 +49,19 @@
 									{% if preq.is_allowed %}
 									<input id="permission_status-{{preq.id}}" type="hidden" name="permission_status" value="0">
 									<button id="access-btn-{{preq.id}}" type="submit" class="btn btn-danger btn-sm">Revoke</button>
-									
+
 
 									{% else %}
 									<input id="permission_status-{{preq.id}}" type="hidden" name="permission_status" value="1">
 									<button class="btn btn-success btn-sm" id="access-btn-{{preq.id}}" type="submit" value="True">Allow</button>
 									{% endif %}
-									
-									
+
+
 								</form>
 							</td>
 						</tr>
 						{% endfor %}
-						
+
 					</tbody>
 				</table>
 			</div>
@@ -103,7 +103,7 @@
 							<td>
 								<form class="ajax-form" action="." method="post" >
 									{% csrf_token %}
-									<input type="hidden" form-name="permission_request_form">
+									<input type="hidden" name="form-name" value="permission_request_form">
 									<input type="hidden" name="accessid" value="{{preq.id}}">
 
 									{% if preq.is_allowed %}
@@ -135,32 +135,8 @@
 
 	<div class="masonry-item col-md-12">
 		<div class="bd bgc-white p-20">
-			<h5>Selected Sensors</h5>
-			<table class="table table-striped">
-					<thead>
-						<tr>
-							<th scope="col">#</th>
-							<th scope="col">Description</th>
-							<th scope="col">ID</th>
-							<th scope="col">Asset Category</th>
-							<th scope="col">Asset Name</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for sensor in selected_sensors %}
-						<tr>
-							<td scope="row"><input type="checkbox"></td>
-							<td>{{ sensor.sensor_description}}</td>
-							<td>{{ sensor.sensor_id }}</td>
-							<td>{{ sensor.asset_category}}</td>
-							<td>{{ sensor.asset_name}}</td>
-						</tr>
-						{% endfor %}
-
-					</tbody>
-				</table>
-			<br>
-			<h5>Unselected Sensors</h5>
+			
+			<h5>All Sensor List</h5>
 			<table class="table table-striped">
 					<thead>
 						<tr>
@@ -179,15 +155,19 @@
 							<td>{{ sensor.asset_category}}</td>
 							<td>{{ sensor.asset_name}}</td>
 
-							<td><form method="post" action=".">
-								{% if sensor in selected_sensors %}
-																<input id="select_status-{{preq.id}}" type="hidden" name="select_status" value="1">
-								<button class="btn btn-danger btn-sm" id="access-btn-{{preq.id}}" type="submit" value="True">Remove From Dashboard</button>
+							<td><form method="post" action="." class="sensorform">
+								{% csrf_token %}
+								<input type="hidden" name="sensorid" value="{{forloop.counter}}">
+								<input type="hidden" name="form-name" value="sensorform">
+								<input type="hidden" name="sensor_id" value="{{sensor.sensor_id}}">
+								{% if sensor.sensor_id in selected_sensors %}
+								<input id="ss-{{forloop.counter}}" type="hidden" name="select_status" value="0">
+								<button id="sbtn-{{forloop.counter}}"  class="btn btn-danger btn-sm sensorbtn" type="submit">Remove From Dashboard</button>
 
 									{% else %}
 										
-								<input id="select_status-{{preq.id}}" type="hidden" name="select_status" value="1">
-								<button class="btn btn-success btn-sm" id="access-btn-{{preq.id}}" type="submit" value="True">Add To Dashboard</button>
+								<input id="ss-{{forloop.counter}}" type="hidden" name="select_status" value="1">
+								<button id="sbtn-{{forloop.counter}}"  class="btn btn-success btn-sm sensorbtn"type="submit">Add To Dashboard</button>
 								{% endif %}
 							</form>
 								
@@ -255,7 +235,43 @@
 		});
 	});
 
+	$('.sensorform').on('submit', function(e){
+		sid = $(e.currentTarget).find('input[name=sensorid]').val();
+		console.log('sid is ' + sid);
+		e.preventDefault();
+		console.log($(e.currentTarget).find('input[name=sensor_id]'));
+		$('.sensorbtn').prop('disabled', true);
+		$.ajax({
+			method: $(this).attr('method'),
+			url: $(this).attr('action'),
+			data: $(this).serialize(),
+		}).done(function(data){
+			console.log(data);
+			if (data.show_on_dashboard == true){
+				$('#ss-' + sid).val(0);
+				$('#sbtn-' + sid).removeClass('btn-success');
+				$('#sbtn-' + sid).addClass('btn-danger');
+				$('#sbtn-' + sid).html('Remove From Dashboard');
+				console.log('in true');
+				//sensorbtn
 
+			} else if(data.show_on_dashboard == false){
+				$('#ss-' + sid).val(1);
+				$('#sbtn-' + sid).removeClass('btn-danger');
+				$('#sbtn-' + sid).addClass('btn-success');
+				$('#sbtn-' + sid).html('Add To Dashboard');
+				console.log('in false');
+			}
+
+		$('.sensorbtn').prop('disabled', false);
+
+		}).fail(function(data){
+			alert("An error occured");	
+			console.log(data);
+		});
+
+
+	});
 
 </script>
 {% endblock %}
