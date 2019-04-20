@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'experiments.apps.ExperimentsConfig',
     'datauploads.apps.DatauploadsConfig',
     'ethanoladmin.apps.EthanoladminConfig',
+    'anomally_detection.apps.AnomallyDetectionConfig',
 
 ]
 
