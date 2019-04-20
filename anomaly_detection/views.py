@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
-from core.forms import 	form_liink
+from core.forms import 	FormLink
 from core.views import BasicAccess
 from .models import  AnomalyData
 
