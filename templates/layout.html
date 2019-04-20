@@ -149,9 +149,15 @@
 							</a>
 							<ul class="dropdown-menu">
 								<li>
+									<a class="sidebar-link" href="{% url 'anomaly_detection:add-anomalydata' %}">
+									Add Anomaly Data</a>
+								</li>
+								<li>
 									<a class="sidebar-link" href="{% url 'anomaly_detection:view-anomaly' %}">
 									Overview</a>
 								</li>
+
+								
 							{% all_anomalydata as anomaly_list %}
 								{% for anomaly in anomaly_list %}
 								<li>
