@@ -1,6 +1,7 @@
 {% load staticfiles %}
 {% load reports_extras %}
 {% load datauploads_extras %}
+{% load anomaly_detection_extras %}
 {% load plotly_dash%}
 
 
@@ -148,21 +149,17 @@
 							</a>
 							<ul class="dropdown-menu">
 								<li>
-									<a class="sidebar-link" href="basic-table.html">
+									<a class="sidebar-link" href="{% url 'anomaly_detection:view-anomaly' %}">
 									Overview</a>
 								</li>
+							{% all_anomalydata as anomaly_list %}
+								{% for anomaly in anomaly_list %}
 								<li>
-									<a class="sidebar-link" href="datatable.html">
-									Corn Grind</a>
+									<a class="sidebar-link" href="{% url 'anomaly_detection:view-anomaly_detail' anomaly.id %}">
+									{{ anomaly.sensor_id }}</a>
 								</li>
-								<li>
-									<a class="sidebar-link" href="basic-table.html">
-									Fermentation</a>
-								</li>
-								<li>
-									<a class="sidebar-link" href="datatable.html">
-									Distillation</a>
-								</li>
+								{% endfor %}
+
 							</ul>
 						</li>
 						<li class="nav-item dropdown">
