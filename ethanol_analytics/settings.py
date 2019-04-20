@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'core.apps.CoreConfig',
     'reports.apps.ReportsConfig',
     'model_utils',
@@ -67,6 +68,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_plotly_dash.middleware.BaseMiddleware',
+    'core.middleware.LastAccessedMiddleware',
 ]
 
 ROOT_URLCONF = 'ethanol_analytics.urls'

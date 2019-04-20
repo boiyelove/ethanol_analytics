@@ -6,7 +6,7 @@ from model_utils.models import TimeStampedModel
 class UserAccessRequest(TimeStampedModel):
 	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='useraccess')
 	is_allowed = models.NullBooleanField()
-
+	last_access = models.DateTimeField()
 
 
 def dictfetchall(cursor):
