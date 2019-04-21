@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import FormView, UpdateView
 from django.views.generic import ListView, DetailView, TemplateView
 from django.contrib.auth.models import User
 from core.models import get_latest_data
@@ -10,20 +10,17 @@ from .forms import ExperimentForm
 from .models import Experiment, get_assets
 
 # Create your views here.
-class CreateExperiment(BasicAccess, CreateView):
+class CreateExperiment(BasicAccess, FormView):
 	form_class = ExperimentForm
 	success_url = reverse_lazy('experiments:list-experiments')
 	template_name = 'experiments/experiment_form.html'
 
 	def form_valid(self, form):
 		self.object = form.save(commit=False)
-		self.object.created_by = self.request.user
-		self.object.save()
+		self.object.created_by = self.request.user.username
+		self.object.add_to_db
 		return HttpResponseRedirect(self.success_url)
-	def form_invalid(self, form):
-		print('post is', self.request.POST)
-		print('form is', form)
-		return super().form_invalid(form)
+
 
 class UpdateExperiment(BasicAccess, UpdateView):
 	form_class = ExperimentForm

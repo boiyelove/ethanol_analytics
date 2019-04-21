@@ -31,7 +31,7 @@ class Experiment(TimeStampedModel):
 	assets = models.CharField(max_length=500)
 	active_flag = models.PositiveIntegerField(default=1, choices=ACTIVEFLAG_CHOICES)
 	status = models.PositiveIntegerField(default=0, choices=EXPERIMENT_CHOICES)
-	created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author')
+	created_by = models.CharField(max_length=120)
 
 	class Meta:
 		abstract = True
