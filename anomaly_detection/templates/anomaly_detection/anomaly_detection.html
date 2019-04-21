@@ -8,15 +8,15 @@
 	<div class="col-lg-4 col-md-6 col-sm-12 mB-10">
 		<div class="card">
 			<div class="card-body">
-				<h6 class="card-title">{{ anomaly.sensor_id }}</h6>
-				<p>{{ anomaly.asset_category }}</p>
+				<h6 class="card-title">{{ anomaly.name }}</h6>
+				<p>{{ anomaly.description }}</p>
 				<br>
 				<div class="row">
 					<div class="col-7">
 						<a class="btn btn-primary" href="{% url 'anomaly_detection:view-anomaly_detail' anomaly.id %}">View anomaly</a>
 					</div>
 					<div class="col-5 text-right">
-						<small>Created {{ anomaly.created }}</small>
+						<small>Created {{ anomaly.create_ts }}</small>
 					</div>
 				</div>
 

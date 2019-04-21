@@ -165,7 +165,7 @@
 								{% for anomaly in anomaly_list %}
 								<li>
 									<a class="sidebar-link" href="{% url 'anomaly_detection:view-anomaly_detail' anomaly.id %}">
-									{{ anomaly.sensor_id }}</a>
+									{{ anomaly.name }}</a>
 								</li>
 								{% endfor %}
 
