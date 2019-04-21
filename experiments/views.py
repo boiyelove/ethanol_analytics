@@ -18,7 +18,7 @@ class CreateExperiment(BasicAccess, FormView):
 	def form_valid(self, form):
 		self.object = form.save(commit=False)
 		self.object.created_by = self.request.user.username
-		self.object.add_to_db
+		self.object.add_to_db()
 		return HttpResponseRedirect(self.success_url)
 
 

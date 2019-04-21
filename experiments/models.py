@@ -29,7 +29,7 @@ class Experiment(TimeStampedModel):
 	goal = models.CharField(max_length=120)
 	additional_comments = models.TextField()
 	assets = models.CharField(max_length=500)
-	active_flag = models.PositiveIntegerField(default=1, choices=ACTIVEFLAG_CHOICES)
+	# active_flag = models.PositiveIntegerField(default=1, choices=ACTIVEFLAG_CHOICES)
 	status = models.PositiveIntegerField(default=0, choices=EXPERIMENT_CHOICES)
 	created_by = models.CharField(max_length=120)
 
@@ -62,10 +62,12 @@ class Experiment(TimeStampedModel):
 
 	def add_to_db(self):
 		with connections['sensors'].cursor() as cursor:
-			if sensor_id:
-				cursor.execute("INSERT INTO whse.dim_experimentation_metadata (test_name,change_date,lookback_window,analysis_window,goal,additional_comments,assets,active_flag,status,created_by) VALUES ({},{},{},{},{},{},{},{},{},{},);".formal(test_name,change_date,lookback_window,analysis_window,goal,additional_comments,assets,active_flag,status,created_by))
-
-		
+			q1 = "INSERT INTO whse.dim_experimentation_metadata (experiment_name,change_date,lookback_window,analysis_window,goal,additional_comments,assets,status,create_user) VALUES ('{}','{}',{},{},'{}','{}'".format(self.test_name,self.change_date,self.lookback_window,self.analysis_window,self.goal,self.additional_comments)
+			q2 = ",ARRAY%s" % self.get_assets()
+			q3 = ",'{}','{}');".format(self.get_status(),self.created_by)
+			cursor.execute(q1 + q2 + q3)
+			# row = cursor.fetchone()
+			# return row
 
 		
 
@@ -82,7 +84,3 @@ class AssetCategory(TimeStampedModel):
 
 	def __str__(self):
 		return self.name
-
-
-
-
