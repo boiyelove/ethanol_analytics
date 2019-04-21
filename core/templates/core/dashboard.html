@@ -4,12 +4,12 @@
 
 
 <div class="row gap-20 masonry pos-r">
-	<div class="masonry-sizer col-md-6">
+	<div class="masonry-sizer col-md-6 col-sm-12">
 	</div>
 	<div class="masonry-item w-100">
 		<div class="row gap-20">
 			{% for sensor in sensor_datalist %}
-			<div class="col-md-3">
+			<div class="col-md-3 col-sm-6">
 				<div class="layers bd bgc-white p-20">
 					<div class="layer w-100 mB-10">
 						<h6 class="lh-1">
@@ -55,11 +55,11 @@
 		</div>
 	</div>
 	<div class="col-md-3">
-		<div class="bd bgc-white p-20" style="min-height:384px;">
+		<div class="bd bgc-white" style="min-height:365px; padding:20px 10px; overflow-x: auto;">
 			<div class="layers">
 				<div class="layer w-100 mB-20">
 
-					<div class="btn-group btn-block" role="group" aria-label="Basic example">
+					<div class="btn-group btn-group-justified" role="group" aria-label="Basic example" style="flex:1;">
 						<button type="button" data-value="day" class="btn btn-primary freq-btn {% ifequal freq 'day' %}active{% endifequal %}">Day</button>
 
 						<button type="button" data-value="week" class="btn btn-primary freq-btn {% ifequal freq 'week' %}active{% endifequal %}">Week</button>
@@ -101,14 +101,14 @@
 	</div>
 </div>
 
-<div class="masonry-item col-md-12">
-	<div class="bd bgc-white">
+<div class="masonry-item col-md-12 bd bgc-white mT-20">
+
 		<div class="layers pT-20 pB-20">
 			<div class="layer w-100 p-20">
-				<h6 class="lh-1 text-center mB-20">
+				<h6 class="lh-1 mB-20">
 				Sensor Data Table - {{sensor_data.0.date}}</h6>
 				
-				<table class="table w-100 table-striped">
+				<table class="table table-responsive table-striped">
 					<thead>
 						<tr>
 							<th scope="col">sensor_description</th>
@@ -138,7 +138,6 @@
 
 			</div>
 		</div>
-	</div>
 </div>
 </div>
 
