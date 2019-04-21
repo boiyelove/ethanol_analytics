@@ -44,7 +44,6 @@ class ExperimentDetail(BasicAccess, DetailView):
 	def get_context_data(self, **kwargs):
 		kwargs = super().get_context_data(**kwargs)
 		sensor_id = self.request.GET.get("sensor_id", None)
-		current_result = Experiment.get_experiment_result()
 
 		kwargs['use_plotlydash'] = True
 		kwargs['sensor_id'] = sensor_id
@@ -57,10 +56,7 @@ class ExperimentResultView(BasicAccess, TemplateView):
 	def get_context_data(self, **kwargs):
 		kwargs = super().get_context_data(**kwargs)
 		sensor_id = self.request.GET.get("sensor_id", None)
-		current_result = Experiment.get_experiment_result()
-
 		kwargs['use_plotlydash'] = True
-
 		kwargs['sensor_id'] = sensor_id
 		return kwargs
 

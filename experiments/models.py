@@ -47,11 +47,6 @@ class Experiment(TimeStampedModel):
 	def get_status(self):
 		return EXPERIMENT_CHOICES[self.status][1]
 
-	@staticmethod
-	def get_experiment_result(id=None):
-		with connections['sensors'].cursor() as cursor:
-			cursor.execute("Select * from experimentation.current_results;")
-			return dictfetchall(cursor)
 
 	@staticmethod
 	def get_numerical_data(sensor_id=None):
