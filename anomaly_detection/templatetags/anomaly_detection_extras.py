@@ -5,4 +5,4 @@ register = template.Library()
 
 @register.simple_tag
 def all_anomalydata():
-	return AnomalyData.objects.all()
+	return AnomalyData.get_anomaly_data()

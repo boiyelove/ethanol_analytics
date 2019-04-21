@@ -20,6 +20,10 @@ class CreateExperiment(BasicAccess, CreateView):
 		self.object.created_by = self.request.user
 		self.object.save()
 		return HttpResponseRedirect(self.success_url)
+	def form_invalid(self, form):
+		print('post is', self.request.POST)
+		print('form is', form)
+		return super().form_invalid(form)
 
 class UpdateExperiment(BasicAccess, UpdateView):
 	form_class = ExperimentForm
