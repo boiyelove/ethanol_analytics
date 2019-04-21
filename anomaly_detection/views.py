@@ -24,15 +24,3 @@ class AnomalyDataCreateView(BasicAccess, CreateView):
 	success_url = reverse_lazy('anomaly_detection:anomaly-view')
 	template_name = 'core/forms.html'
 	extra_context = {'form_name': 'Anomally Data', 'exit_link': FormLink('Back to List', reverse_lazy('anomaly_detection:anomaly-view'))}
-
-	def get_form(self, form_class):
-		form = super(AnomalyDataCreateView, self).get_form(form_class)
-		form.fields['anomaly_start'].widget = forms.DateTimeInput(attrs={
-            'class': 'form-control datetimepicker-input',
-            'data-target': '#datetimepicker1'
-        })
-		form.fields['anomaly_end'].widget = forms.DateTimeInput(attrs={
-            'class': 'form-control datetimepicker-input',
-            'data-target': '#datetimepicker2'
-        })
-		return form
