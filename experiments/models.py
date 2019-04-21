@@ -32,7 +32,9 @@ class Experiment(TimeStampedModel):
 	active_flag = models.PositiveIntegerField(default=1, choices=ACTIVEFLAG_CHOICES)
 	status = models.PositiveIntegerField(default=0, choices=EXPERIMENT_CHOICES)
 	created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author')
-	modified_by = models.ManyToManyField(User, related_name='editors')
+
+	class Meta:
+		abstract = True
 
 	def __str__(self):
 		return self.test_name
@@ -57,6 +59,13 @@ class Experiment(TimeStampedModel):
 				cursor.execute("Select sensor_id, sensor_description, value, time, (case when time > change_date then 'after' when time <= change_date then 'before' end)as group from ( Select b.sensor_id, sensor_description, change_date, lookback_window, analysis_window,a.asset_category,d.value,d.time from (Select id, change_date, lookback_window, analysis_window, unnest(assets) as asset_category from whse.dim_experimentation_metadata ) a inner join whse.dim_sensor_metadata b on a.asset_category = b.asset_category and sensor_id = 'PORT_CIP.AB_A.F44:41' inner join  whse.agg_hour_sensor_values d on b.sensor_id = d.sensor_id and d.time between change_date:: date - lookback_window and change_date:: date + analysis_window) k;")
 				
 			return dictfetchall(cursor)
+
+	def add_to_db(self):
+		with connections['sensors'].cursor() as cursor:
+			if sensor_id:
+				cursor.execute("INSERT INTO whse.dim_experimentation_metadata (test_name,change_date,lookback_window,analysis_window,goal,additional_comments,assets,active_flag,status,created_by) VALUES ({},{},{},{},{},{},{},{},{},{},);".formal(test_name,change_date,lookback_window,analysis_window,goal,additional_comments,assets,active_flag,status,created_by))
+
+		
 
 		
 
