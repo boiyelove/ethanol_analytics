@@ -4,7 +4,7 @@ from .models import Experiment, ASSET_CHOICES
 
 class ExperimentForm(forms.ModelForm):
 	assets = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=ASSET_CHOICES)
-
+	change_date = forms.DateTimeField(input_formats = ['%d/%m/%Y %H:%M'])
 
 	class Meta:
 		model = Experiment

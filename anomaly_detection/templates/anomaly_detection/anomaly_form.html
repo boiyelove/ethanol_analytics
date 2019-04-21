@@ -26,9 +26,9 @@
 
 				<div class="form-group row">
 					<div class="col-6">
-										<div class="form-group"><label for="id_anomaly_start">Anomally Start</label>
+										<div class="form-group"><label for="id_anomaly_start">Anomaly Start</label>
 					<div class="input-group date" id="id_anomaly_start" data-target-input="nearest">
-                    <input type="text" class="form-control datetimepicker-input" data-target="#id_anomaly_start"/>
+                    <input type="text" class="form-control datetimepicker-input" name="anomaly_start" data-target="#id_anomaly_start" required="True" {% if form.anomaly_start.value %}value="{{form.anomaly_start.value}}"{% endif %}/>
                     <div class="input-group-append" data-target="#id_anomaly_start" data-toggle="datetimepicker">
                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                     </div>
@@ -36,9 +36,9 @@
             </div>
 					</div>
 					<div class="col-6">
-										<div class="form-group"><label for="id_anomaly_end">Anomally End</label>
+				<div class="form-group"><label for="id_anomaly_end">Anomaly End</label>
 					<div class="input-group date" id="id_anomaly_end" data-target-input="nearest">
-                    <input type="text" class="form-control datetimepicker-input" data-target="#id_anomaly_end"/>
+                    <input type="text" class="form-control datetimepicker-input" name="anomaly_end" data-target="#id_anomaly_end" required="True"{% if form.anomaly_end.value %}value="{{form.anomaly_end.value}}"{% endif %}/>
                     <div class="input-group-append" data-target="#id_anomaly_end" data-toggle="datetimepicker">
                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                     </div>
@@ -63,8 +63,13 @@
 
 		<script type="text/javascript">
             $(function () {
-                $('#id_anomaly_start').datetimepicker();
-                $('#id_anomaly_end').datetimepicker();
+                $('#id_anomaly_start').datetimepicker({
+                	 format: 'DD MM YYYY HH:mm',
+                });
+                $('#id_anomaly_end').datetimepicker({
+                	 format: 'DD MM YYYY HH:mm',
+
+                });
             });
         </script>
 {% endblock %}

@@ -21,6 +21,17 @@ class AnomalyDetectionView(BasicAccess, TemplateView):
 class AnomalyDataCreateView(BasicAccess, CreateView):
 	model = AnomalyData
 	fields = ['sensor_id', 'anomaly_start', 'anomaly_end', 'asset_category']
-	success_url = reverse_lazy('anomaly_detection:anomaly-view')
+	success_url = reverse_lazy('anomaly_detection:view-anomaly')
 	template_name = 'anomaly_detection/anomaly_form.html'
-	extra_context = {'form_name': 'Anomally Data', 'exit_link': FormLink('Back to List', reverse_lazy('anomaly_detection:anomaly-view'))}
+	extra_context = {'form_name': 'Anomaly Data', 'exit_link': FormLink('Back to List', reverse_lazy('anomaly_detection:view-anomaly'))}
+
+	def get_form(self, form_class=None):
+		form = super().get_form(form_class)
+		form.fields['anomaly_start'].input_formats = ['%d/%m/%Y %H:%M']
+		form.fields['anomaly_end'].input_formats = ['%d/%m/%Y %H:%M']
+		return form
+
+	def form_invalid(self, form):
+		print('post is', self.request.POST)
+		print('form is', form)
+		return super().form_invalid(form)
