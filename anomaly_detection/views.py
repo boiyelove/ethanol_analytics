@@ -13,7 +13,7 @@ class AnomalyDetectionView(BasicAccess, TemplateView):
 	def get_context_data(self, **kwargs):
 		id = kwargs.get('id', None)
 		if id:
-			kwargs['anomaly_item'] = AnomalyData.objects.get(id=id)
+			kwargs['anomaly_item'] = AnomalyData.get_anomaly_data(id=id)
 			kwargs['use_plotlydash'] = True
 			self.template_name = "anomaly_detection/anomaly_detection_detail.html"
 		return super().get_context_data(**kwargs)
