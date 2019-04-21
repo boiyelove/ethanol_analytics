@@ -22,5 +22,5 @@ class AnomalyDataCreateView(BasicAccess, CreateView):
 	model = AnomalyData
 	fields = ['sensor_id', 'anomaly_start', 'anomaly_end', 'asset_category']
 	success_url = reverse_lazy('anomaly_detection:anomaly-view')
-	template_name = 'core/forms.html'
+	template_name = 'anomaly_detection/anomaly_form.html'
 	extra_context = {'form_name': 'Anomally Data', 'exit_link': FormLink('Back to List', reverse_lazy('anomaly_detection:anomaly-view'))}

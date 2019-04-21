@@ -15,7 +15,14 @@
 				{% bootstrap_form_errors form %}
 				{% csrf_token %}
 				<div class="form-group"><label for="id_test_name">Test name</label><input type="text" name="test_name" maxlength="120" class="form-control" placeholder="Test name" title="" required="" id="id_test_name" {% if form.test_name.value %}value="{{form.test_name.value}}"{% endif %}></div>
-				<div class="form-group"><label for="id_change_date">Change date</label><input type="date" name="change_date" class="form-control" placeholder="Change date" title="" required="" id="id_change_date" {% if form.change_date.value %}value="{{form.change_date.value}}"{% endif %}></div>
+				<div class="form-group"><label for="id_change_date">Change date</label>
+					<div class="input-group date" id="id_change_date" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input" data-target="#id_change_date"/>
+                    <div class="input-group-append" data-target="#id_change_date" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+            </div>
 
 				<div class="form-group row">
 					<div class="col-6"><label for="id_lookback_window">Lookback window</label><input type="number" name="lookback_window" min="0" class="form-control" placeholder="Lookback window" title="" required="" id="id_lookback_window" {% if form.lookback_window.value %}value="{{form.lookback_window.value}}"{% endif %}>
@@ -39,4 +46,13 @@
 	</div>
 </div>
 
+{% endblock %}
+
+{% block extra_js %}
+
+		<script type="text/javascript">
+            $(function () {
+                $('#id_change_date').datetimepicker();
+            });
+        </script>
 {% endblock %}
