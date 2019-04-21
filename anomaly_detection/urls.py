@@ -1,7 +1,7 @@
 from django.urls import path
 from .dashapps import dash_app3
 from . import views
-
+from .dashapps import dash_app3
 
 app_name ='anomaly_detection'
 
